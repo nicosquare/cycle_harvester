@@ -28,29 +28,29 @@ static THD_FUNCTION(Thread1, arg) {
 
   chRegSetThreadName("blinker");
   while (true) {
-    palSetPad(GPIOC, GPIOC_LED4);
-    chThdSleepMilliseconds(250);
-    palClearPad(GPIOC, GPIOC_LED4);
-    chThdSleepMilliseconds(250);
+    palSetPad(GPIOD, 2);
+    chThdSleepMilliseconds(2000);
+    palClearPad(GPIOD, 2);
+    chThdSleepMilliseconds(2000);
   }
 }
 
 /*
  * Blinker thread #2.
  */
-static THD_WORKING_AREA(waThread2, 128);
-static THD_FUNCTION(Thread2, arg) {
+//static THD_WORKING_AREA(waThread2, 128);
+//static THD_FUNCTION(Thread2, arg) {
 
-  (void)arg;
+  //(void)arg;
 
-  chRegSetThreadName("bluetooth");
-  while (true) {
-	  
-	  
-	  
-   
-  }
-}
+  //chRegSetThreadName("blinker");
+  //while (true) {
+    //palSetPad(GPIOC, GPIOC_LED3);
+    //chThdSleepMilliseconds(500);
+    //palClearPad(GPIOC, GPIOC_LED3);
+    //chThdSleepMilliseconds(500);
+  //}
+//}
 
 /*
  * Application entry point.
@@ -72,14 +72,13 @@ int main(void) {
    * Activates the serial driver 1 using the driver default configuration.
    * PA9(TX) and PA10(RX) are routed to USART1.
    */
-  sdStart(&SD1, NULL);
   sdStart(&SD3, NULL); // We are using SD3
 
   /*
    * Creates the example threads.
    */
   chThdCreateStatic(waThread1, sizeof(waThread1), NORMALPRIO+1, Thread1, NULL);
-  chThdCreateStatic(waThread2, sizeof(waThread2), NORMALPRIO+1, Thread2, NULL);
+  //chThdCreateStatic(waThread2, sizeof(waThread2), NORMALPRIO+1, Thread2, NULL);
 
   /*
    * Normal main() thread activity, in this demo it does nothing except
