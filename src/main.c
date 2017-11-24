@@ -18,6 +18,8 @@
 #include "hal.h"
 #include "ch_test.h"
 
+#include "btmodule.h"
+
 /*
  * Blinker thread #1.
  */
