@@ -36,4 +36,5 @@ of [NiKiZe](https://github.com/NiKiZe/EMT707CTL).
 - Integrate code of Bluetooth module
 - Integrate code of energy sensor
 
-Last update: 17 november 2017.
+Last update: 24 november 2017.
+
