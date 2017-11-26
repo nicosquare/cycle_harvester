@@ -84,6 +84,8 @@
 
 #define PAL_STM32_OSPEED_HIGHEST           (3U << 3U)
 
+// ---------------------------
+
 #define _bluetooth_device_methods                                                           \
     void (*btStart)(void *instance);                                      \
     void (*btStartReceive)(void *instance);                                                     \

@@ -24,8 +24,6 @@
 
 #if defined(HAL_USE_BLUETOOTH) || defined(__DOXYGEN__)
 
-//extern SerialUSBDriver SDU1;
-
 /**
     @brief bluetooth virtual methods table
 */
@@ -130,8 +128,8 @@ void btInit(void *instance, BluetoothConfig *config){
 	
 	thread_descriptor_t sendThreadDescriptor = {
 		.name = "sendThreadDescriptor",
-		.wbase = &btSendThreadWa,
-		.wend = sizeof(btSendThreadWa),
+		.wbase = THD_WORKING_AREA_BASE(btSendThreadWa),
+		.wend = THD_WORKING_AREA_END(btSendThreadWa),
 		.prio = NORMALPRIO,
 		.funcp = btSendThread,
 		.arg = drv,
@@ -139,8 +137,8 @@ void btInit(void *instance, BluetoothConfig *config){
 	
 	thread_descriptor_t recieveThreadDescriptor = {
 		.name = "recieveThreadDescriptor",
-		.wbase = &btRecieveThreadWa,
-		.wend = sizeof(btRecieveThreadWa),
+		.wbase = THD_WORKING_AREA_BASE(btRecieveThreadWa),
+		.wend = THD_WORKING_AREA_END(btRecieveThreadWa),
 		.prio = NORMALPRIO,
 		.funcp = btRecieveThread,
 		.arg = drv,
@@ -204,8 +202,8 @@ void btStartReceive(void *instance){
 
     BluetoothDriver *drv = (BluetoothDriver *) instance;
 
-    chThdResume(&(drv->sendThread));
-    chThdResume(&(drv->recieveThread));
+    chThdResume(&(drv->sendThread), MSG_OK);
+    chThdResume(&(drv->recieveThread), MSG_OK);
 
     return;
 };
