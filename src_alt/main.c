@@ -18,6 +18,38 @@
 #include "hal.h"
 #include "test.h"
 
+#include "btmodule.h"
+
+/* =================================================*/
+/* Bluetooth test                                   */
+/*                                                  */
+/*===================================================*/
+
+static BluetoothDriver myTestBtDriver;
+static SerialConfig myTestSerialConfigAT = { 38400, 0, 0, 0 };
+
+
+static BluetoothConfig myTestBtConfig = {
+	.btSerialConfig = &myTestSerialConfigAT,
+	.btSerialDriver = &SD2,
+	.btModuleName = "HarvesterBT",
+	.commBaudRate = 38400,
+	.atBaudRate = 38400,
+};
+
+
+void startBtTest(void){
+
+	btInit(&myTestBtDriver, &myTestBtConfig);
+    btStart(&myTestBtDriver);
+
+};
+
+/* =================================================*/
+/* Thread definition                                */
+/*                                                  */
+/*===================================================*/
+
 /*
  * Blinker thread #1.
  */
@@ -25,68 +57,87 @@
 static THD_WORKING_AREA(waThread1, 128);
 static THD_FUNCTION(Thread1, arg) {
 
-  (void)arg;
+	(void)arg;
 
-  chRegSetThreadName("blinker");
-  while (true) {
-    palSetPad(GPIOD, 2);
-    chThdSleepMilliseconds(100);
-    palClearPad(GPIOD, 2);
-    chThdSleepMilliseconds(100);
-  }
+	chRegSetThreadName("blinker");
+	
+	while (true) {
+		palSetPad(GPIOD, 2);
+		chThdSleepMilliseconds(100);
+		palClearPad(GPIOD, 2);
+		chThdSleepMilliseconds(100);
+	}
 }
 
 /*
  * Blinker thread #2.
  */
+ 
 //static THD_WORKING_AREA(waThread2, 128);
 //static THD_FUNCTION(Thread2, arg) {
 
-  //(void)arg;
+	//(void)arg;
 
-  //chRegSetThreadName("blinker");
-  //while (true) {
-    //palSetPad(GPIOC, GPIOC_LED3);
-    //chThdSleepMilliseconds(500);
-    //palClearPad(GPIOC, GPIOC_LED3);
-    //chThdSleepMilliseconds(500);
-  //}
+	//chRegSetThreadName("blinker");
+  
+	//while (true) {
+		//palSetPad(GPIOC, GPIOC_LED3);
+		//chThdSleepMilliseconds(500);
+		//palClearPad(GPIOC, GPIOC_LED3);
+		//chThdSleepMilliseconds(500);
+	//}
 //}
 
-/*
- * Application entry point.
- */
+/*===========================================================================*/
+/* Initialization and main thread.                                           */
+/*===========================================================================*/
+
 int main(void) {
+/*
+	* System initializations.
+	* - HAL initialization, this also initializes the configured device drivers
+	*   and performs the board-specific initializations.
+	* - Kernel initialization, the main() function becomes a thread and the
+	*   RTOS is active.
+	*/
 
-  /*
-   * System initializations.
-   * - HAL initialization, this also initializes the configured device drivers
-   *   and performs the board-specific initializations.
-   * - Kernel initialization, the main() function becomes a thread and the
-   *   RTOS is active.
-   */
-  halInit();
-  chSysInit();
-  boardInit();
+	halInit();
+	chSysInit();
+	boardInit();
 
-  /*
-   * Activates the serial driver 1 using the driver default configuration.
-   * PA9(TX) and PA10(RX) are routed to USART1.
-   */
-  sdStart(&SD3, NULL); // We are using SD3
+	/*
+	* BT Module initialization
+	*/
 
-  /*
-   * Creates the example threads.
-   */
-  chThdCreateStatic(waThread1, sizeof(waThread1), NORMALPRIO+1, Thread1, NULL);
-  //chThdCreateStatic(waThread2, sizeof(waThread2), NORMALPRIO+1, Thread2, NULL);
+	//startBtTest();
+	
+	/*
+	* Activates the serial driver 1 using the driver default configuration.
+	* PA9(TX) and PA10(RX) are routed to USART1.
+	*/
+	
+	sdStart(&SD2, NULL);
+	sdStart(&SD3, NULL);
+	
+	/*
+	* Creates the example threads.
+	*/
+	
+	chThdCreateStatic(waThread1, sizeof(waThread1), NORMALPRIO+1, Thread1, NULL);
+	//chThdCreateStatic(waThread2, sizeof(waThread2), NORMALPRIO+1, Thread2, NULL);
 
-  /*
-   * Normal main() thread activity, in this demo it does nothing except
-   * sleeping in a loop and check the button state, when the button is
-   * pressed the test procedure is launched.
-   */
-  while (true) {
-	  chprintf((BaseChannel *)&SD3, "test %x\n\r");
-  }
+	/*
+	* Normal main() thread activity, in this demo it does nothing except
+	* sleeping in a loop and check the button state, when the button is
+	* pressed the test procedure is launched.
+	*/
+	while (true) {
+	
+		// Test of Serial Port
+		
+		chprintf((BaseChannel *)&SD3, "Test of Serial Port 3 %x\n\r");
+		
+		// Test of BT
+	
+	}
 }

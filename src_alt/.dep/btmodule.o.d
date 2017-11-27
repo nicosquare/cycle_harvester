@@ -1,8 +1,25 @@
-build/obj/main.o: main.c ../../ChibiOS_16.1.8/os/rt/include/ch.h \
- ../../ChibiOS_16.1.8/os/rt/ports/ARMCMx/compilers/GCC/chtypes.h \
+build/obj/btmodule.o: btmodule.c \
+ /home/madog/programs/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/include/stdlib.h \
+ /home/madog/programs/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/include/machine/ieeefp.h \
+ /home/madog/programs/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/include/_ansi.h \
+ /home/madog/programs/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/include/newlib.h \
+ /home/madog/programs/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/include/sys/config.h \
+ /home/madog/programs/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/include/sys/features.h \
  /home/madog/programs/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.6.1/include/stddef.h \
+ /home/madog/programs/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/include/sys/reent.h \
+ /home/madog/programs/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/include/_ansi.h \
+ /home/madog/programs/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/include/sys/_types.h \
+ /home/madog/programs/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/include/machine/_types.h \
+ /home/madog/programs/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/include/machine/_default_types.h \
+ /home/madog/programs/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/include/sys/lock.h \
+ /home/madog/programs/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/include/machine/stdlib.h \
+ /home/madog/programs/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/include/alloca.h \
  /home/madog/programs/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.6.1/include/stdint.h \
  /home/madog/programs/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/include/stdint.h \
+ /home/madog/programs/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/include/sys/queue.h \
+ /home/madog/programs/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/include/machine/ansi.h \
+ ../../ChibiOS_16.1.8/os/rt/include/ch.h \
+ ../../ChibiOS_16.1.8/os/rt/ports/ARMCMx/compilers/GCC/chtypes.h \
  /home/madog/programs/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.6.1/include/stdbool.h \
  chconf.h ../../ChibiOS_16.1.8/os/rt/include/chlicense.h \
  ../../ChibiOS_16.1.8/os/rt/include/chsystypes.h \
@@ -82,20 +99,53 @@ build/obj/main.o: main.c ../../ChibiOS_16.1.8/os/rt/include/ch.h \
  ../../ChibiOS_16.1.8/os/hal/include/st.h \
  ../../ChibiOS_16.1.8/os/hal/include/mmc_spi.h \
  ../../ChibiOS_16.1.8/os/hal/include/serial_usb.h \
- ../../ChibiOS_16.1.8/test/rt/test.h btmodule.h \
- /home/madog/programs/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/include/sys/queue.h \
- /home/madog/programs/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/include/machine/ansi.h \
- ../../ChibiOS_16.1.8/os/hal/include/serial.h
+ ../../ChibiOS_16.1.8/os/rt/include/chthreads.h \
+ ../../ChibiOS_16.1.8/os/rt/include/chmemcore.h \
+ /home/madog/programs/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/include/string.h \
+ /home/madog/programs/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/include/sys/string.h \
+ btmodule.h ../../ChibiOS_16.1.8/os/hal/include/serial.h
 
-../../ChibiOS_16.1.8/os/rt/include/ch.h:
+/home/madog/programs/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/include/stdlib.h:
 
-../../ChibiOS_16.1.8/os/rt/ports/ARMCMx/compilers/GCC/chtypes.h:
+/home/madog/programs/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/include/machine/ieeefp.h:
+
+/home/madog/programs/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/include/_ansi.h:
+
+/home/madog/programs/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/include/newlib.h:
+
+/home/madog/programs/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/include/sys/config.h:
+
+/home/madog/programs/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/include/sys/features.h:
 
 /home/madog/programs/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.6.1/include/stddef.h:
+
+/home/madog/programs/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/include/sys/reent.h:
+
+/home/madog/programs/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/include/_ansi.h:
+
+/home/madog/programs/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/include/sys/_types.h:
+
+/home/madog/programs/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/include/machine/_types.h:
+
+/home/madog/programs/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/include/machine/_default_types.h:
+
+/home/madog/programs/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/include/sys/lock.h:
+
+/home/madog/programs/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/include/machine/stdlib.h:
+
+/home/madog/programs/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/include/alloca.h:
 
 /home/madog/programs/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.6.1/include/stdint.h:
 
 /home/madog/programs/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/include/stdint.h:
+
+/home/madog/programs/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/include/sys/queue.h:
+
+/home/madog/programs/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/include/machine/ansi.h:
+
+../../ChibiOS_16.1.8/os/rt/include/ch.h:
+
+../../ChibiOS_16.1.8/os/rt/ports/ARMCMx/compilers/GCC/chtypes.h:
 
 /home/madog/programs/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.6.1/include/stdbool.h:
 
@@ -263,12 +313,14 @@ mcuconf.h:
 
 ../../ChibiOS_16.1.8/os/hal/include/serial_usb.h:
 
-../../ChibiOS_16.1.8/test/rt/test.h:
+../../ChibiOS_16.1.8/os/rt/include/chthreads.h:
+
+../../ChibiOS_16.1.8/os/rt/include/chmemcore.h:
+
+/home/madog/programs/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/include/string.h:
+
+/home/madog/programs/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/include/sys/string.h:
 
 btmodule.h:
-
-/home/madog/programs/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/include/sys/queue.h:
-
-/home/madog/programs/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/include/machine/ansi.h:
 
 ../../ChibiOS_16.1.8/os/hal/include/serial.h:
