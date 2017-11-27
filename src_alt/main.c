@@ -42,7 +42,7 @@ static BluetoothConfig myTestBtConfig = {
 void startBtTest(void){
 
 	btInit(&myTestBtDriver, &myTestBtConfig);
-    //btStart(&myTestBtDriver);
+    btStart(&myTestBtDriver);
 
 };
 

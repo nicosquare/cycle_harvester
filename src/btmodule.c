@@ -101,8 +101,12 @@ static msg_t btRecieveThread(void *instance) {
 */
 
 void btInit(void *instance, BluetoothConfig *config){
-
-
+	
+	// Pin init
+	
+	palSetPad(GPIOA, 1);
+	palClearPad(GPIOA, 2);
+    
     BluetoothDriver *drv = (BluetoothDriver *) instance;
     //null pointer check
     if (!drv || !config)
