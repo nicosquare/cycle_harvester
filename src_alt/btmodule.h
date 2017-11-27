@@ -13,8 +13,7 @@
 #include <sys/queue.h>
 #include "ch.h"
 #include "hal.h"
-#include "serial.h"
-
+#include "hal_serial.h"
 
 #define HAL_USE_BLUETOOTH
 
@@ -86,7 +85,6 @@
 #define PAL_STM32_OSPEED_HIGHEST           (3U << 3U)
 
 // ---------------------------
-
 
 #define _bluetooth_device_methods                                                           \
     void (*btStart)(void *instance);                                      \

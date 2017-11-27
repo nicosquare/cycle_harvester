@@ -1,0 +1,27 @@
+EESchema-LIBRARY Version 2.3
+#encoding utf-8
+#
+# D_Small-RESCUE-EMT707CTL-FINAL
+#
+DEF D_Small-RESCUE-EMT707CTL-FINAL D 0 10 N N 1 F N
+F0 "D" -50 80 50 H V L CNN
+F1 "D_Small-RESCUE-EMT707CTL-FINAL" -150 -80 50 H V L CNN
+F2 "" 0 0 50 V I C CNN
+F3 "" 0 0 50 V I C CNN
+$FPLIST
+ TO-???*
+ *SingleDiode
+ *_Diode_*
+ *SingleDiode*
+ D_*
+$ENDFPLIST
+DRAW
+P 2 0 1 0 -30 -40 -30 40 N
+P 2 0 1 0 -30 0 30 0 N
+P 4 0 1 0 30 -40 -30 0 30 40 30 -40 N
+X A + 100 0 70 L 50 50 1 1 P
+X K - -100 0 70 R 50 50 1 1 P
+ENDDRAW
+ENDDEF
+#
+#End Library

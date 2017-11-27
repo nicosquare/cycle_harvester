@@ -1,0 +1,57 @@
+Embebidos: estado del proyecto
+
+APLICACIÓN (70 %)
+
+- Especificación del sistema
+
+** Falta de especificación del problema en texto y su relación con la solución: ¿por qué se usa la solución que escogimos?, limitaciones, proyección
+** Funciones (?) encontradas: especificar y explicar como solucionan el problema
+** Descripción del proyecto a nivel: técnico, negocios, mundano
+
+- Modelo del sistema
+
+** Esquematizar el proyecto en bloques: procesador, puertos, periféricos, mundo exterior
+** Diagramar el proyecto en bloques funcionales
+
+- Arquitectura del sistema
+
+** Arquitectura de código acorde a los bloques funcionales y dividida de la misma manera
+
+- Prototipado y pruebas
+
+** Diseño de FSM-DP a partir de la arquitectura descrita anteriormente
+
+- Docuementación
+
+** Wiki explicando todo lo anterior (trabajo paralelo)
+
+EVLUACIÓN (20 %)
+
+- Especificación del sistema
+
+** Definición de la viabilidad de la solución propuesta
+** Matriz de evaluación que da fe del avance dle proyecto en cuando a aspectos técnico y comercial
+
+- Modelo del sistema
+
+** Evaluación del modelo actual, comparación contra otros modelos y conclusión al respecto
+** Re planteamiento del modelo (LoRa)
+
+- Arquitectura del sistema
+
+** Definición de tareas SW/HW 
+** Evaluar otras arquitecturas
+** Crítica a propio modelo
+
+- Prototipado y pruebas
+
+** Simulaciones
+** Análisis de riesgos que hagan susceptible el error
+
+- Docuementación
+
+** Wiki explicando todos los aspectos relativos a la evaluación
+
+
+
+---> Ddiwrnod AvsZ

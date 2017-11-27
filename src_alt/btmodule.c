@@ -17,7 +17,7 @@
 #include <chmemcore.h>
 #include <string.h>
 #include <btmodule.h>
-#include <serial.h>
+#include <hal_serial.h>
 
 #define HAL_USE_BLUETOOTH
 
@@ -104,6 +104,7 @@ void btInit(void *instance, BluetoothConfig *config){
 
 
     BluetoothDriver *drv = (BluetoothDriver *) instance;
+    
     //null pointer check
     if (!drv || !config)
         return;
@@ -120,9 +121,31 @@ void btInit(void *instance, BluetoothConfig *config){
     drv->serialConfig = (config->btSerialConfig != NULL) ? config->btSerialConfig : &btDefaultSerialConfigAT;
     drv->vmt = &bluetoothDeviceVMT;
 
+
+	// Struct thread_descriptor_t
+	
+	
+	thread_descriptor_t sendThreadDescriptor = {
+		.name = "sendThreadDescriptor",
+		.wbase = THD_WORKING_AREA_BASE(btSendThreadWa),
+		.wend = THD_WORKING_AREA_END(btSendThreadWa),
+		.prio = NORMALPRIO,
+		.funcp = btSendThread,
+		.arg = drv,
+	};
+	
+	thread_descriptor_t recieveThreadDescriptor = {
+		.name = "recieveThreadDescriptor",
+		.wbase = THD_WORKING_AREA_BASE(btRecieveThreadWa),
+		.wend = THD_WORKING_AREA_END(btRecieveThreadWa),
+		.prio = NORMALPRIO,
+		.funcp = btRecieveThread,
+		.arg = drv,
+	};
+
     //create driverThread, but do not start it yet
-    drv->sendThread=chThdCreateI(btSendThreadWa, sizeof(btSendThreadWa), NORMALPRIO, (tfunc_t)btSendThread, drv);
-    drv->recieveThread=chThdCreateI(btRecieveThreadWa, sizeof(btRecieveThreadWa), NORMALPRIO, (tfunc_t)btRecieveThread, drv);
+    drv->sendThread=chThdCreateI(&sendThreadDescriptor);
+    drv->recieveThread=chThdCreateI(&recieveThreadDescriptor);
 
 };
 
@@ -142,8 +165,8 @@ void btStart(void *instance){
     /**
     TODO: Serial driver defines
     */
-    //palSetPadMode(GPIOA, 2, PAL_MODE_ALTERNATE(7));
-    //palSetPadMode(GPIOA, 3, PAL_MODE_ALTERNATE(7));
+    palSetPadMode(GPIOA, 2, PAL_MODE_ALTERNATE(7));
+    palSetPadMode(GPIOA, 3, PAL_MODE_ALTERNATE(7));
     sdStart(drv->serialDriver, &btDefaultSerialConfigAT);
 
     chThdSleepMilliseconds(5000);
