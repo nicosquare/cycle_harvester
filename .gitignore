@@ -1,2 +1,4 @@
 build/
 debug/
+src/.dep/
+src_alt/.dep/
