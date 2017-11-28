@@ -63,9 +63,9 @@ static THD_FUNCTION(Thread1, arg) {
 	
 	while (true) {
 		palSetPad(GPIOD, 2);
-		chThdSleepMilliseconds(100);
+		chThdSleepMilliseconds(1000);
 		palClearPad(GPIOD, 2);
-		chThdSleepMilliseconds(100);
+		chThdSleepMilliseconds(1000);
 	}
 }
 
@@ -109,14 +109,15 @@ int main(void) {
 	* BT Module initialization
 	*/
 
-	//startBtTest();
+	startBtTest();
+	
+	sendBt(&myTestBtDriver,"Hola",4);
 	
 	/*
 	* Activates the serial driver 1 using the driver default configuration.
 	* PA9(TX) and PA10(RX) are routed to USART1.
 	*/
 	
-	sdStart(&SD2, NULL);
 	sdStart(&SD3, NULL);
 	
 	/*

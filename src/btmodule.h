@@ -27,7 +27,7 @@
 #define BT_RESET_PIN 5
 #define BT_RESET_PORT GPIOE
 #define BT_MODE_KEY_PIN 4
-#define BT_MODE_KEY_PORT GPIOE
+#define BT_MODE_KEY_PORT GPIOA
 
 //these should only recieve an "OK\r\n" response from the module
 
