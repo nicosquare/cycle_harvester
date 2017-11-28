@@ -101,23 +101,15 @@ static msg_t btRecieveThread(void *instance) {
 */
 
 void btInit(void *instance, BluetoothConfig *config){
-	
-	// Pin init
-	
-	palSetPad(GPIOA, 1);
-	palClearPad(GPIOA, 2);
     
     BluetoothDriver *drv = (BluetoothDriver *) instance;
+    
     //null pointer check
     if (!drv || !config)
         return;
 
-    palSetPadMode(BT_MODE_KEY_PORT, BT_MODE_KEY_PIN, PAL_MODE_OUTPUT_PUSHPULL
-                | PAL_STM32_OSPEED_HIGHEST);
-    palSetPadMode(BT_RESET_PORT, BT_RESET_PIN, PAL_MODE_OUTPUT_PUSHPULL
-                | PAL_STM32_OSPEED_HIGHEST);
-
-
+    palSetPadMode(BT_MODE_KEY_PORT, BT_MODE_KEY_PIN, PAL_MODE_OUTPUT_PUSHPULL);
+    palSetPadMode(BT_RESET_PORT, BT_RESET_PIN, PAL_MODE_OUTPUT_PUSHPULL);
 
     drv->bluetoothConfig = config;
     drv->serialDriver = (config->btSerialDriver != NULL) ? config->btSerialDriver : BT_DEFAULT_SERIAL_DRIVER_ADDRESS;
@@ -146,26 +138,24 @@ void btStart(void *instance){
     /**
     TODO: Serial driver defines
     */
-    //palSetPadMode(GPIOA, 2, PAL_MODE_ALTERNATE(7));
-    //palSetPadMode(GPIOA, 3, PAL_MODE_ALTERNATE(7));
+    
     sdStart(drv->serialDriver, &btDefaultSerialConfigAT);
 
-    chThdSleepMilliseconds(5000);
+   chThdSleepMilliseconds(5000);
 
-    //switch to AT mode
-    drv->vmt->btSetModeAt(drv, 5000);
-    //start the serial driver, then configure the module
+		//switch to AT mode
+   drv->vmt->btSetModeAt(drv, 5000);
+		//start the serial driver, then configure the module
 
+		//we should do the predefined module configuration here, eg.: name, communication baud rate, PIN code, etc.
 
+   BT_SET_SERIAL_PARAMETERS(drv,"115200","0","0");
+   BT_SET_NAME(drv,"HarvesterBT");
+   BT_RESET(drv);
+   BT_SET_PASSKEY(drv, "1234");
+   
 
-    //we should do the predefined module configuration here, eg.: name, communication baud rate, PIN code, etc.
-
-    BT_SET_NAME(drv,"hapci1");
-
-    BT_RESET(drv);
-    BT_SET_PASSKEY(drv, "4321");
-
-    //here we should switch to communications mode and be ready for connections
+			//here we should switch to communications mode and be ready for connections
 
     drv->vmt->btSetModeComm(drv, 5000);
 
@@ -251,8 +241,8 @@ void btSetModeAt(void * instance, uint16_t timeout){
 
     BluetoothDriver *drv = (BluetoothDriver *) instance;
     //reset module (low), pull key high
-    chSysLock();
-    palSetPad(BT_MODE_KEY_PORT, BT_MODE_KEY_PIN);
+    chSysLock(); 
+    palSetPad(BT_MODE_KEY_PORT, BT_MODE_KEY_PIN); //Wake up or Enable pin
     chSysUnlock();
 
     chThdSleepMilliseconds(100);

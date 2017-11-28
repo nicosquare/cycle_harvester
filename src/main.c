@@ -22,7 +22,7 @@
 
 /* =================================================*/
 /* Bluetooth test                                   */
-/*                                                  */
+/*             38400     115200                                */
 /*===================================================*/
 
 static BluetoothDriver myTestBtDriver;
@@ -63,9 +63,9 @@ static THD_FUNCTION(Thread1, arg) {
 	
 	while (true) {
 		palSetPad(GPIOD, 2);
-		chThdSleepMilliseconds(100);
+		chThdSleepMilliseconds(1000);
 		palClearPad(GPIOD, 2);
-		chThdSleepMilliseconds(100);
+		chThdSleepMilliseconds(1000);
 	}
 }
 
@@ -73,20 +73,23 @@ static THD_FUNCTION(Thread1, arg) {
  * Blinker thread #2.
  */
  
-//static THD_WORKING_AREA(waThread2, 128);
-//static THD_FUNCTION(Thread2, arg) {
+static THD_WORKING_AREA(waThread2, 128);
+static THD_FUNCTION(Thread2, arg) {
 
-	//(void)arg;
+	(void)arg;
 
-	//chRegSetThreadName("blinker");
-  
-	//while (true) {
-		//palSetPad(GPIOC, GPIOC_LED3);
-		//chThdSleepMilliseconds(500);
-		//palClearPad(GPIOC, GPIOC_LED3);
-		//chThdSleepMilliseconds(500);
-	//}
-//}
+	chRegSetThreadName("bluetooth");
+	
+	/*
+	* BT Module initialization
+	*/
+
+	startBtTest();
+	sendBt(&myTestBtDriver,"Hola",4);
+    
+	while (true) {
+	}
+}
 
 /*===========================================================================*/
 /* Initialization and main thread.                                           */
@@ -106,17 +109,10 @@ int main(void) {
 	boardInit();
 
 	/*
-	* BT Module initialization
-	*/
-
-	//startBtTest();
-	
-	/*
 	* Activates the serial driver 1 using the driver default configuration.
 	* PA9(TX) and PA10(RX) are routed to USART1.
 	*/
 	
-	sdStart(&SD2, NULL);
 	sdStart(&SD3, NULL);
 	
 	/*
@@ -124,7 +120,7 @@ int main(void) {
 	*/
 	
 	chThdCreateStatic(waThread1, sizeof(waThread1), NORMALPRIO+1, Thread1, NULL);
-	//chThdCreateStatic(waThread2, sizeof(waThread2), NORMALPRIO+1, Thread2, NULL);
+	chThdCreateStatic(waThread2, sizeof(waThread2), NORMALPRIO+1, Thread2, NULL);
 
 	/*
 	* Normal main() thread activity, in this demo it does nothing except
