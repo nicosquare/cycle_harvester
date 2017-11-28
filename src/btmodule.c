@@ -141,23 +141,25 @@ void btStart(void *instance){
     
     sdStart(drv->serialDriver, &btDefaultSerialConfigAT);
 
-    chThdSleepMilliseconds(5000);
+   chThdSleepMilliseconds(5000);
 
-    //switch to AT mode
-    drv->vmt->btSetModeAt(drv, 5000);
-    //start the serial driver, then configure the module
+		//switch to AT mode
+   drv->vmt->btSetModeAt(drv, 5000);
+		//start the serial driver, then configure the module
 
-    //we should do the predefined module configuration here, eg.: name, communication baud rate, PIN code, etc.
+		//we should do the predefined module configuration here, eg.: name, communication baud rate, PIN code, etc.
 
-    BT_SET_NAME(drv,"HarvesterBT");
-    BT_RESET(drv);
-    BT_SET_PASSKEY(drv, "1234");
+   BT_SET_SERIAL_PARAMETERS(drv,"115200","0","0");
+   BT_SET_NAME(drv,"HarvesterBT");
+   BT_RESET(drv);
+   BT_SET_PASSKEY(drv, "1234");
+   
 
-    //here we should switch to communications mode and be ready for connections
+			//here we should switch to communications mode and be ready for connections
 
     drv->vmt->btSetModeComm(drv, 5000);
 
-     btStartReceive(drv);
+    btStartReceive(drv);
 
 };
 
