@@ -30,17 +30,17 @@ static SerialConfig myTestSerialConfigAT = { 38400, 0, 0, 0 };
 
 
 static BluetoothConfig myTestBtConfig = {
-	.btSerialConfig = &myTestSerialConfigAT,
-	.btSerialDriver = &SD2,
-	.btModuleName = "HarvesterBT",
-	.commBaudRate = 38400,
-	.atBaudRate = 38400,
+    .btSerialConfig = &myTestSerialConfigAT,
+    .btSerialDriver = &SD2,
+    .btModuleName = "HarvesterBT",
+    .commBaudRate = 38400,
+    .atBaudRate = 38400,
 };
 
 
-void startBtTest(void){
+void startBtTest(void) {
 
-	btInit(&myTestBtDriver, &myTestBtConfig);
+    btInit(&myTestBtDriver, &myTestBtConfig);
     btStart(&myTestBtDriver);
 
 };
@@ -57,38 +57,38 @@ void startBtTest(void){
 static THD_WORKING_AREA(waThread1, 128);
 static THD_FUNCTION(Thread1, arg) {
 
-	(void)arg;
+    (void)arg;
 
-	chRegSetThreadName("blinker");
-	
-	while (true) {
-		palSetPad(GPIOD, 2);
-		chThdSleepMilliseconds(1000);
-		palClearPad(GPIOD, 2);
-		chThdSleepMilliseconds(1000);
-	}
+    chRegSetThreadName("blinker");
+
+    while (true) {
+        palSetPad(GPIOD, 2);
+        chThdSleepMilliseconds(1000);
+        palClearPad(GPIOD, 2);
+        chThdSleepMilliseconds(1000);
+    }
 }
 
 /*
  * Blinker thread #2.
  */
- 
+
 static THD_WORKING_AREA(waThread2, 128);
 static THD_FUNCTION(Thread2, arg) {
 
-	(void)arg;
+    (void)arg;
 
-	chRegSetThreadName("bluetooth");
-	
-	/*
-	* BT Module initialization
-	*/
+    chRegSetThreadName("bluetooth");
 
-	startBtTest();
-	sendBt(&myTestBtDriver,"Hola",4);
-    
-	while (true) {
-	}
+    /*
+    * BT Module initialization
+    */
+
+    startBtTest();
+    //sendBt(&myTestBtDriver,"Hola",4);
+
+    while (true) {
+    }
 }
 
 /*===========================================================================*/
@@ -96,44 +96,47 @@ static THD_FUNCTION(Thread2, arg) {
 /*===========================================================================*/
 
 int main(void) {
-/*
-	* System initializations.
-	* - HAL initialization, this also initializes the configured device drivers
-	*   and performs the board-specific initializations.
-	* - Kernel initialization, the main() function becomes a thread and the
-	*   RTOS is active.
-	*/
+    /*
+    	* System initializations.
+    	* - HAL initialization, this also initializes the configured device drivers
+    	*   and performs the board-specific initializations.
+    	* - Kernel initialization, the main() function becomes a thread and the
+    	*   RTOS is active.
+    	*/
 
-	halInit();
-	chSysInit();
-	boardInit();
+    halInit();
+    chSysInit();
+    boardInit();
 
-	/*
-	* Activates the serial driver 1 using the driver default configuration.
-	* PA9(TX) and PA10(RX) are routed to USART1.
-	*/
-	
-	sdStart(&SD3, NULL);
-	
-	/*
-	* Creates the example threads.
-	*/
-	
-	chThdCreateStatic(waThread1, sizeof(waThread1), NORMALPRIO+1, Thread1, NULL);
-	chThdCreateStatic(waThread2, sizeof(waThread2), NORMALPRIO+1, Thread2, NULL);
+    /*
+    * Activates the serial driver 1 using the driver default configuration.
+    * PA9(TX) and PA10(RX) are routed to USART1.
+    */
 
-	/*
-	* Normal main() thread activity, in this demo it does nothing except
-	* sleeping in a loop and check the button state, when the button is
-	* pressed the test procedure is launched.
-	*/
-	while (true) {
-	
-		// Test of Serial Port
-		
-		chprintf((BaseChannel *)&SD3, "Test of Serial Port 3 %x\n\r");
-		
-		// Test of BT
-	
-	}
+    sdStart(&SD3, NULL);
+
+    /*
+    * Creates the example threads.
+    */
+
+    chThdCreateStatic(waThread1, sizeof(waThread1), NORMALPRIO+1, Thread1, NULL);
+    chThdCreateStatic(waThread2, sizeof(waThread2), NORMALPRIO+1, Thread2, NULL);
+
+    /*
+    * Normal main() thread activity, in this demo it does nothing except
+    * sleeping in a loop and check the button state, when the button is
+    * pressed the test procedure is launched.
+    */
+    while (true) {
+
+        // Test of Serial Port Onion - Laptop
+
+        
+        // Test of Serial Port STM32 - Onion
+
+        chprintf((BaseChannel *)&SD3, "Comm STM32 - Onion\n\r");
+
+        // Test of BT
+
+    }
 }

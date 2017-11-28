@@ -4,17 +4,17 @@ APLICACIÓN (70 %)
 
 - Especificación del sistema
 
-** Falta de especificación del problema en texto y su relación con la solución: ¿por qué se usa la solución que escogimos?, limitaciones, proyección
-** Funciones (?) encontradas: especificar y explicar como solucionan el problema
-** Descripción del proyecto a nivel: técnico, negocios, mundano
+** Falta de especificación del problema en texto y su relación con la solución: ¿por qué se usa la solución que escogimos?, limitaciones, proyección OK
+** Funciones (?) encontradas: especificar y explicar como solucionan el problema OK
+** Descripción del proyecto a nivel: técnico, negocios OK, mundano OK
 
 - Modelo del sistema
 
-** Esquematizar el proyecto en bloques: procesador, puertos, periféricos, mundo exterior
-** Diagramar el proyecto en bloques funcionales
+** Diagramar el proyecto en bloques funcionales OK
 
 - Arquitectura del sistema
 
+** Esquematizar el proyecto en bloques: procesador, puertos, periféricos, mundo exterior
 ** Arquitectura de código acorde a los bloques funcionales y dividida de la misma manera
 
 - Prototipado y pruebas

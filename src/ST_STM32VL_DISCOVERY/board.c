@@ -46,4 +46,18 @@ void __early_init(void) {
  * Board-specific initialization code.
  */
 void boardInit(void) {
+	
+	/*
+		USART3 re-mapped to PC10-PC11
+	*/
+
+	AFIO -> MAPR |= AFIO_MAPR_USART3_REMAP_PARTIALREMAP;
+
+	/*
+		del AFIO typedef, el campo o atributo MAPR se cambia (se hace una OR), para remap en este caso se usa el USART
+		http://stm32.kosyak.info/doc/stm32f10x_8h_source.html ->> 02606 #define AFIO_MAPR_USART3_REMAP_PARTIALRMAP, y
+		02594 ****************************** Bit definition for AFIO_MAPR register ************************
+		http://stm32.kosyak.info/doc/struct_a_f_i_o___type_def.html -->> el Typedef AFIO
+	*/
+	
 }

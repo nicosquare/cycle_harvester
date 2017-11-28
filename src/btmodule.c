@@ -55,14 +55,14 @@ static msg_t btSendThread(void *instance) {
     chRegSetThreadName("btSendThread");
 
     while (TRUE) {
-        if ( !chIQIsEmptyI(drv->bluetoothConfig->btInputQueue) ){
+        if ( !chIQIsEmptyI(drv->bluetoothConfig->btInputQueue) ) {
 
             chnPutTimeout((BaseChannel *)drv->serialDriver, chIQGetTimeout(drv->bluetoothConfig->btInputQueue, TIME_IMMEDIATE), TIME_INFINITE);
         }
         chThdSleepMilliseconds(drv->bluetoothConfig->commSleepTimeMs);
-      }
+    }
 
-  return (msg_t) 0;
+    return (msg_t) 0;
 }
 
 
@@ -82,7 +82,7 @@ static msg_t btRecieveThread(void *instance) {
     chRegSetThreadName("btRecieveThread");
 
     while (TRUE) {
-        if ( !chOQIsFullI(drv->bluetoothConfig->btOutputQueue) ){
+        if ( !chOQIsFullI(drv->bluetoothConfig->btOutputQueue) ) {
 
             chOQPut(drv->bluetoothConfig->btOutputQueue, chnGetTimeout((BaseChannel *)drv->serialDriver, TIME_INFINITE));
         }
@@ -90,7 +90,7 @@ static msg_t btRecieveThread(void *instance) {
     }
 
 
-  return (msg_t) 0;
+    return (msg_t) 0;
 }
 
 /**
@@ -100,10 +100,10 @@ static msg_t btRecieveThread(void *instance) {
 
 */
 
-void btInit(void *instance, BluetoothConfig *config){
-    
+void btInit(void *instance, BluetoothConfig *config) {
+
     BluetoothDriver *drv = (BluetoothDriver *) instance;
-    
+
     //null pointer check
     if (!drv || !config)
         return;
@@ -127,7 +127,7 @@ void btInit(void *instance, BluetoothConfig *config){
     @param instance : BluetoothDriver pointer
 */
 
-void btStart(void *instance){
+void btStart(void *instance) {
 
 
     if(!instance)
@@ -138,24 +138,24 @@ void btStart(void *instance){
     /**
     TODO: Serial driver defines
     */
-    
+
     sdStart(drv->serialDriver, &btDefaultSerialConfigAT);
+    
+    chThdSleepMilliseconds(5000);
 
-   chThdSleepMilliseconds(5000);
+    //switch to AT mode
+    drv->vmt->btSetModeAt(drv, 5000);
+    //start the serial driver, then configure the module
 
-		//switch to AT mode
-   drv->vmt->btSetModeAt(drv, 5000);
-		//start the serial driver, then configure the module
+    //we should do the predefined module configuration here, eg.: name, communication baud rate, PIN code, etc.
 
-		//we should do the predefined module configuration here, eg.: name, communication baud rate, PIN code, etc.
+    BT_SET_SERIAL_PARAMETERS(drv,"115200","0","0");
+    BT_SET_NAME(drv,"HarvesterBT");
+    BT_RESET(drv);
+    BT_SET_PASSKEY(drv, "1234");
 
-   BT_SET_SERIAL_PARAMETERS(drv,"115200","0","0");
-   BT_SET_NAME(drv,"HarvesterBT");
-   BT_RESET(drv);
-   BT_SET_PASSKEY(drv, "1234");
-   
 
-			//here we should switch to communications mode and be ready for connections
+    //here we should switch to communications mode and be ready for connections
 
     drv->vmt->btSetModeComm(drv, 5000);
 
@@ -168,7 +168,7 @@ void btStart(void *instance){
     @brief Starts the bluetooth threads
     @param instance : BluetoothDriver pointer
 */
-void btStartReceive(void *instance){
+void btStartReceive(void *instance) {
 
     BluetoothDriver *drv = (BluetoothDriver *) instance;
 
@@ -183,7 +183,7 @@ void btStartReceive(void *instance){
     @brief Should stop the thread
     @param instance : BluetoothDriver pointer
 */
-void btStopReceive(void *instance){
+void btStopReceive(void *instance) {
 
     BluetoothDriver *drv = (BluetoothDriver *) instance;
 
@@ -200,7 +200,7 @@ void btStopReceive(void *instance){
 */
 
 
-void btSendAtCommand(void *instance, char *command){
+void btSendAtCommand(void *instance, char *command) {
 
     if ( !instance || !command )
         return;
@@ -234,14 +234,14 @@ void btSendAtCommand(void *instance, char *command){
     @param instance : BluetoothDriver pointer
 */
 
-void btSetModeAt(void * instance, uint16_t timeout){
+void btSetModeAt(void * instance, uint16_t timeout) {
 
     if(!instance)
         return;
 
     BluetoothDriver *drv = (BluetoothDriver *) instance;
     //reset module (low), pull key high
-    chSysLock(); 
+    chSysLock();
     palSetPad(BT_MODE_KEY_PORT, BT_MODE_KEY_PIN); //Wake up or Enable pin
     chSysUnlock();
 
@@ -268,7 +268,7 @@ void btSetModeAt(void * instance, uint16_t timeout){
     @param instance : BluetoothDriver pointer
 */
 
-void btSetModeComm(void * instance, uint16_t timeout){
+void btSetModeComm(void * instance, uint16_t timeout) {
 
     if(!instance)
         return;
@@ -301,7 +301,7 @@ void btSetModeComm(void * instance, uint16_t timeout){
     @brief Empty the serial buffer from incoming garbage or data
     @param instance : BluetoothDriver pointer
 */
-void btEmptyIncomingSerial(void *instance){
+void btEmptyIncomingSerial(void *instance) {
 
     BluetoothDriver *drv = (BluetoothDriver *) instance;
 
@@ -327,7 +327,7 @@ void btEmptyIncomingSerial(void *instance){
  * \return EXIT_SUCCESS or EXIT_FAILURE
  */
 
-int sendBt(BluetoothDriver *instance, char *buffer, int bufferlength){
+int sendBt(BluetoothDriver *instance, char *buffer, int bufferlength) {
 
     if(!instance || !buffer)
         return EXIT_FAILURE;
