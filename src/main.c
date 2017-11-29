@@ -18,32 +18,17 @@
 #include "hal.h"
 #include "test.h"
 
-#include "btmodule.h"
+#include "hc05.h"
 
 /* =================================================*/
 /* Bluetooth test                                   */
 /*             38400     115200                                */
 /*===================================================*/
 
-static BluetoothDriver myTestBtDriver;
-static SerialConfig myTestSerialConfigAT = { 38400, 0, 0, 0 };
+#define HAL_USE_BLUETOOTH                 TRUE
 
-
-static BluetoothConfig myTestBtConfig = {
-    .btSerialConfig = &myTestSerialConfigAT,
-    .btSerialDriver = &SD2,
-    .btModuleName = "HarvesterBT",
-    .commBaudRate = 38400,
-    .atBaudRate = 38400,
-};
-
-
-void startBtTest(void) {
-
-    btInit(&myTestBtDriver, &myTestBtConfig);
-    btStart(&myTestBtDriver);
-
-};
+struct BluetoothDriver* BluetoothDriverForConsole;
+extern struct BluetoothDeviceVMT hc05BtDevVMT;
 
 /* =================================================*/
 /* Thread definition                                */
@@ -70,7 +55,7 @@ static THD_FUNCTION(Thread1, arg) {
 }
 
 /*
- * Blinker thread #2.
+ * Bluetooth thread #2.
  */
 
 static THD_WORKING_AREA(waThread2, 128);
@@ -80,15 +65,53 @@ static THD_FUNCTION(Thread2, arg) {
 
     chRegSetThreadName("bluetooth");
 
-    /*
-    * BT Module initialization
-    */
+    static struct hc05_config_t myhc05_config = {
+        .txport = gpioa_port,
+        .txpin = 2,
+        .rxport = gpioa_port,
+        .rxpin = 3,
+        .keyport = gpioa_port,
+        .keypin = 4,
+        .serialdriver = sd2
+    };
 
-    startBtTest();
-    //sendBt(&myTestBtDriver,"Hola",4);
+    static struct BluetoothConfig myTestBluetoothConfig = {
+        .name = "Modul",
+        .pincode = "1234",
+        .baudrate = b38400,
+        .usedmodule = hc05,
+        .myhc05config = &myhc05_config
 
-    while (true) {
+    };
+
+    static struct BluetoothDriver myTestBluetoothDriver = {
+        .vmt = &hc05BtDevVMT,
+        .config = &myTestBluetoothConfig,
+        .driverIsReady = 0,
+        .commSleepTimeMs = 100
+    };
+
+    //set the test driver struct as the consolestruct
+    BluetoothDriverForConsole = &myTestBluetoothDriver;
+
+    btOpen(&myTestBluetoothDriver, &myTestBluetoothConfig);
+
+    btSend(&myTestBluetoothDriver, "Hola", 4);
+    chThdSleepMilliseconds(1000);
+
+    char * test_in;
+
+    btRead(&myTestBluetoothDriver, test_in, 10);
+
+    while(true) {
+
+		chprintf((BaseChannel *)&SD3, "Test \n\r");
+        chprintf((BaseChannel *)&SD3, test_in);
+        chprintf((BaseChannel *)&SD3, "\n\r");
+
+        chThdSleepMilliseconds(1000);
     }
+
 }
 
 /*===========================================================================*/
@@ -131,10 +154,10 @@ int main(void) {
 
         // Test of Serial Port Onion - Laptop
 
-        
+
         // Test of Serial Port STM32 - Onion
 
-        chprintf((BaseChannel *)&SD3, "Comm STM32 - Onion\n\r");
+        //chprintf((BaseChannel *)&SD3, "Comm STM32 - Onion\n\r");
 
         // Test of BT
 

@@ -17,6 +17,7 @@
 #include "mcuconf.h"
 #include <string.h>
 
+#define HAL_USE_HC_05_BLUETOOTH                 TRUE
 
 #if HAL_USE_HC_05_BLUETOOTH || defined(__DOXYGEN__) || 1
 
@@ -49,16 +50,16 @@ static volatile enum hc05_state_t hc05CurrentState = st_unknown;
  * \param[in] bufferlength The number of bytes to send
  * \return EXIT_SUCCESS or EXIT_FAILURE
  */
-int hc05sendBuffer(struct BluetoothDriver *instance, char *buffer, int bufferlength){
+int hc05sendBuffer(struct BluetoothDriver *instance, char *buffer, int bufferlength) {
 
-	if ( !instance || !buffer )
-		return EXIT_FAILURE;
-	if ( !bufferlength )
-		return EXIT_SUCCESS;
+    if ( !instance || !buffer )
+        return EXIT_FAILURE;
+    if ( !bufferlength )
+        return EXIT_SUCCESS;
 
     return sdWriteTimeout(instance->config->myhc05config->hc05serialpointer, buffer, bufferlength, TIME_IMMEDIATE) > 0
-            ? EXIT_SUCCESS
-            : EXIT_FAILURE;
+           ? EXIT_SUCCESS
+           : EXIT_FAILURE;
 
 }
 
@@ -69,10 +70,10 @@ int hc05sendBuffer(struct BluetoothDriver *instance, char *buffer, int bufferlen
  * \param[in] mybyte A byte to send
  * \return EXIT_SUCCESS or EXIT_FAILURE
  */
-int hc05sendByte(struct BluetoothDriver *instance, int mybyte){
+int hc05sendByte(struct BluetoothDriver *instance, int mybyte) {
 
-	if ( !instance )
-		return EXIT_FAILURE;
+    if ( !instance )
+        return EXIT_FAILURE;
 
     return sdPut(instance->config->myhc05config->hc05serialpointer, mybyte);
 }
@@ -84,12 +85,12 @@ int hc05sendByte(struct BluetoothDriver *instance, int mybyte){
  * \param[in] instance A BluetoothDriver object
  * \return 1 if there is data, 0 if there isn't
  */
-int hc05canRecieve(struct BluetoothDriver *instance){
+int hc05canRecieve(struct BluetoothDriver *instance) {
 
-	if ( !instance )
-		return EXIT_FAILURE;
+    if ( !instance )
+        return EXIT_FAILURE;
 
-	return sdGetWouldBlock(instance->config->myhc05config->hc05serialpointer) == 0 ? 1 : 0;
+    return sdGetWouldBlock(instance->config->myhc05config->hc05serialpointer) == 0 ? 1 : 0;
 
 }
 
@@ -101,16 +102,16 @@ int hc05canRecieve(struct BluetoothDriver *instance){
  * \param[in] maxlength The maximum number of bytes to read (size of the buffer)
  * \return EXIT_SUCCESS or EXIT_FAILURE
  */
-int hc05readBuffer(struct BluetoothDriver *instance, char *buffer, int maxlength){
+int hc05readBuffer(struct BluetoothDriver *instance, char *buffer, int maxlength) {
 
-	if ( !instance || !buffer )
-		return EXIT_FAILURE;
-	if ( !maxlength )
-		return EXIT_SUCCESS;
+    if ( !instance || !buffer )
+        return EXIT_FAILURE;
+    if ( !maxlength )
+        return EXIT_SUCCESS;
 
-	return sdReadTimeout(instance->config->myhc05config->hc05serialpointer, buffer, maxlength, TIME_IMMEDIATE) > 0
-            ? EXIT_SUCCESS
-            : EXIT_FAILURE;
+    return sdReadTimeout(instance->config->myhc05config->hc05serialpointer, buffer, maxlength, TIME_IMMEDIATE) > 0
+           ? EXIT_SUCCESS
+           : EXIT_FAILURE;
 
 }
 
@@ -121,21 +122,21 @@ int hc05readBuffer(struct BluetoothDriver *instance, char *buffer, int maxlength
 *	\param[in] command AT command to use. Must be '\0' terminated string
 *	\return EXIT_SUCCESS or EXIT_FAILURE
 */
-int hc05sendAtCommand(struct BluetoothDriver *instance, char* command){
+int hc05sendAtCommand(struct BluetoothDriver *instance, char* command) {
 
-	if ( !instance || !command )
-		return EXIT_FAILURE;
+    if ( !instance || !command )
+        return EXIT_FAILURE;
 
 
-	if (hc05CurrentState != st_ready_at_command)
-	{
-		hc05CurrentState = st_unknown;
-		//enter AT mode here, but wait for threads to detect state change
+    if (hc05CurrentState != st_ready_at_command)
+    {
+        hc05CurrentState = st_unknown;
+        //enter AT mode here, but wait for threads to detect state change
 
         hc05SetModeAt(instance->config, 200);
         //chThdSleepMilliseconds(instance->commSleepTimeMs);
         chThdSleepMilliseconds(500);
-	}
+    }
 
 
     sdWrite(instance->config->myhc05config->hc05serialpointer, command, strlen(command));
@@ -145,7 +146,7 @@ int hc05sendAtCommand(struct BluetoothDriver *instance, char* command){
 
     hc05SetModeComm(instance->config, 200);
 
-	return EXIT_SUCCESS;
+    return EXIT_SUCCESS;
 }
 
 
@@ -159,10 +160,10 @@ int hc05sendAtCommand(struct BluetoothDriver *instance, char* command){
  * \param[in] pinlength The length of the new pin
  * \return EXIT_SUCCESS or EXIT_FAILURE
  */
-int hc05setPinCode(struct BluetoothDriver *instance, char *pin, int pinlength){
+int hc05setPinCode(struct BluetoothDriver *instance, char *pin, int pinlength) {
 
-	if ( !instance || !pin )
-		return EXIT_FAILURE;
+    if ( !instance || !pin )
+        return EXIT_FAILURE;
 
     char Command[] = "AT+PIN=";
     int cmdLen = strlen(Command);
@@ -171,7 +172,7 @@ int hc05setPinCode(struct BluetoothDriver *instance, char *pin, int pinlength){
     char *CmdBuf = chHeapAlloc(NULL, bufLen);
 
     if(!CmdBuf)
-		return EXIT_FAILURE;
+        return EXIT_FAILURE;
     else
         memset(CmdBuf, '\0', bufLen);
 
@@ -197,10 +198,10 @@ int hc05setPinCode(struct BluetoothDriver *instance, char *pin, int pinlength){
  * \param[in] namelength The length of the new name
  * \return EXIT_SUCCESS or EXIT_FAILURE
  */
-int hc05setName(struct BluetoothDriver *instance, char *newname, int namelength){
+int hc05setName(struct BluetoothDriver *instance, char *newname, int namelength) {
 
     if ( !instance || !newname )
-		return EXIT_FAILURE;
+        return EXIT_FAILURE;
 
     char Command[] = "AT+NAME=";
     int cmdLen = strlen(Command);
@@ -209,7 +210,7 @@ int hc05setName(struct BluetoothDriver *instance, char *newname, int namelength)
     char *CmdBuf = chHeapAlloc(NULL, bufLen);
 
     if(!CmdBuf)
-		return EXIT_FAILURE;
+        return EXIT_FAILURE;
     else
         memset(CmdBuf, '\0', bufLen);
 
@@ -233,10 +234,10 @@ int hc05setName(struct BluetoothDriver *instance, char *newname, int namelength)
  * \param[in] instance A BluetoothDriver object
  * \return EXIT_SUCCESS or EXIT_FAILURE
  */
-int hc05resetDefaults(struct BluetoothDriver *instance){
+int hc05resetDefaults(struct BluetoothDriver *instance) {
 
     if ( !instance )
-		return EXIT_FAILURE;
+        return EXIT_FAILURE;
 
     char Command[] = "AT+ORGL";
     int cmdLen = strlen(Command);
@@ -245,7 +246,7 @@ int hc05resetDefaults(struct BluetoothDriver *instance){
     char *CmdBuf = chHeapAlloc(NULL, bufLen);
 
     if(!CmdBuf)
-		return EXIT_FAILURE;
+        return EXIT_FAILURE;
     else
         memset(CmdBuf, '\0', bufLen);
 
@@ -274,7 +275,7 @@ int hc05resetDefaults(struct BluetoothDriver *instance){
  * \param[in] config A BluetoothConfig the use
  * \return EXIT_SUCCESS or EXIT_FAILURE
  */
-int hc05open(struct BluetoothDriver *instance, struct  BluetoothConfig *config){
+int hc05open(struct BluetoothDriver *instance, struct  BluetoothConfig *config) {
 
     if(!instance || !config || !(config->myhc05config))
         return EXIT_FAILURE;
@@ -311,7 +312,7 @@ int hc05open(struct BluetoothDriver *instance, struct  BluetoothConfig *config){
  * \param[in] instance A BluetoothDriver object
  * \return EXIT_SUCCESS or EXIT_FAILURE
  */
-int hc05close(struct BluetoothDriver *instance){
+int hc05close(struct BluetoothDriver *instance) {
 
     if(!instance)
         return EXIT_FAILURE;
@@ -355,46 +356,36 @@ struct BluetoothDeviceVMT hc05BtDevVMT = {
  * \param[in] config A BluetoothConfig object
  * \return EXIT_SUCCESS or EXIT_FAILURE
  */
-int hc05_settxpin(struct BluetoothConfig *config){
+int hc05_settxpin(struct BluetoothConfig *config) {
 
     if(!config || !(config->myhc05config))
         return EXIT_FAILURE;
 
-    switch (config->myhc05config->txport){
+    switch (config->myhc05config->txport) {
 
-        case gpioa_port:
-            palSetPadMode(GPIOA, config->myhc05config->txpin,
-                          config->myhc05config->txalternatefunction < 0
-                          ? (PAL_MODE_OUTPUT_PUSHPULL | PAL_STM32_OSPEED_HIGHEST)
-                          : PAL_MODE_ALTERNATE(config->myhc05config->txalternatefunction));
-            break;
-        case gpiob_port:
-            palSetPadMode(GPIOB, config->myhc05config->txpin,
-                          config->myhc05config->txalternatefunction < 0
-                          ? (PAL_MODE_OUTPUT_PUSHPULL | PAL_STM32_OSPEED_HIGHEST)
-                          : PAL_MODE_ALTERNATE(config->myhc05config->txalternatefunction));
-            break;
-        case gpioc_port:
-            palSetPadMode(GPIOC, config->myhc05config->txpin,
-                          config->myhc05config->txalternatefunction < 0
-                          ? (PAL_MODE_OUTPUT_PUSHPULL | PAL_STM32_OSPEED_HIGHEST)
-                          : PAL_MODE_ALTERNATE(config->myhc05config->txalternatefunction));
-            break;
-        case gpiod_port:
-            palSetPadMode(GPIOD, config->myhc05config->txpin,
-                          config->myhc05config->txalternatefunction < 0
-                          ? (PAL_MODE_OUTPUT_PUSHPULL | PAL_STM32_OSPEED_HIGHEST)
-                          : PAL_MODE_ALTERNATE(config->myhc05config->txalternatefunction));
-            break;
-        case gpioe_port:
-            palSetPadMode(GPIOE, config->myhc05config->txpin,
-                          config->myhc05config->txalternatefunction < 0
-                          ? (PAL_MODE_OUTPUT_PUSHPULL | PAL_STM32_OSPEED_HIGHEST)
-                          : PAL_MODE_ALTERNATE(config->myhc05config->txalternatefunction));
-            break;
-        default:
-            return EXIT_FAILURE;
-            break;
+    case gpioa_port:
+        palSetPadMode(GPIOA, config->myhc05config->txpin,
+                      PAL_MODE_STM32_ALTERNATE_PUSHPULL);
+        break;
+    case gpiob_port:
+        palSetPadMode(GPIOB, config->myhc05config->txpin,
+                      PAL_MODE_STM32_ALTERNATE_PUSHPULL);
+        break;
+    case gpioc_port:
+        palSetPadMode(GPIOC, config->myhc05config->txpin,
+                      PAL_MODE_STM32_ALTERNATE_PUSHPULL);
+        break;
+    case gpiod_port:
+        palSetPadMode(GPIOD, config->myhc05config->txpin,
+                      PAL_MODE_STM32_ALTERNATE_PUSHPULL);
+        break;
+    case gpioe_port:
+        palSetPadMode(GPIOE, config->myhc05config->txpin,
+                      PAL_MODE_STM32_ALTERNATE_PUSHPULL);
+        break;
+    default:
+        return EXIT_FAILURE;
+        break;
     }
     return EXIT_SUCCESS;
 }
@@ -406,45 +397,36 @@ int hc05_settxpin(struct BluetoothConfig *config){
  * \param[in] config A BluetoothConfig object
  * \return EXIT_SUCCESS or EXIT_FAILURE
  */
-int hc05_setrxpin(struct BluetoothConfig *config){
+int hc05_setrxpin(struct BluetoothConfig *config) {
 
     if(!config || !(config->myhc05config))
         return EXIT_FAILURE;
 
-    switch (config->myhc05config->rxport){
+    switch (config->myhc05config->rxport) {
 
-        case gpioa_port:
-            palSetPadMode(GPIOA, config->myhc05config->rxpin,
-                          config->myhc05config->rxalternatefunction < 0
-                          ? (PAL_MODE_OUTPUT_PUSHPULL | PAL_STM32_OSPEED_HIGHEST)
-                          : PAL_MODE_ALTERNATE(config->myhc05config->rxalternatefunction));
-            break;
-        case gpiob_port:
-            palSetPadMode(GPIOB, config->myhc05config->rxpin,
-                          config->myhc05config->rxalternatefunction < 0
-                          ? (PAL_MODE_OUTPUT_PUSHPULL | PAL_STM32_OSPEED_HIGHEST)
-                          : PAL_MODE_ALTERNATE(config->myhc05config->rxalternatefunction));
-            break;
-        case gpioc_port:
-            palSetPadMode(GPIOC, config->myhc05config->rxpin,
-                          config->myhc05config->rxalternatefunction < 0
-                          ? (PAL_MODE_OUTPUT_PUSHPULL | PAL_STM32_OSPEED_HIGHEST)
-                          : PAL_MODE_ALTERNATE(config->myhc05config->rxalternatefunction));
-            break;
-        case gpiod_port:
-            palSetPadMode(GPIOD, config->myhc05config->rxpin,
-                          config->myhc05config->rxalternatefunction < 0
-                          ? (PAL_MODE_OUTPUT_PUSHPULL | PAL_STM32_OSPEED_HIGHEST)
-                          : PAL_MODE_ALTERNATE(config->myhc05config->rxalternatefunction));
-            break;
-        case gpioe_port:
-            palSetPadMode(GPIOE, config->myhc05config->rxpin,
-                          config->myhc05config->rxalternatefunction < 0
-                          ? (PAL_MODE_OUTPUT_PUSHPULL | PAL_STM32_OSPEED_HIGHEST)
-                          : PAL_MODE_ALTERNATE(config->myhc05config->rxalternatefunction));
-           default:
-            return EXIT_FAILURE;
-            break;
+    case gpioa_port:
+        palSetPadMode(GPIOA, config->myhc05config->rxpin,
+                      PAL_MODE_STM32_ALTERNATE_PUSHPULL);
+        break;
+    case gpiob_port:
+        palSetPadMode(GPIOB, config->myhc05config->rxpin,
+                      PAL_MODE_STM32_ALTERNATE_PUSHPULL);
+        break;
+    case gpioc_port:
+        palSetPadMode(GPIOC, config->myhc05config->rxpin,
+                      PAL_MODE_STM32_ALTERNATE_PUSHPULL);
+        break;
+    case gpiod_port:
+        palSetPadMode(GPIOD, config->myhc05config->rxpin,
+                      PAL_MODE_STM32_ALTERNATE_PUSHPULL);
+        break;
+    case gpioe_port:
+        palSetPadMode(GPIOE, config->myhc05config->rxpin,
+                      PAL_MODE_STM32_ALTERNATE_PUSHPULL);
+        break;
+    default:
+        return EXIT_FAILURE;
+        break;
     }
     return EXIT_SUCCESS;
 }
@@ -456,47 +438,36 @@ int hc05_setrxpin(struct BluetoothConfig *config){
  * \param[in] config A BluetoothConfig object
  * \return EXIT_SUCCESS or EXIT_FAILURE
  */
-int hc05_setrtspin(struct BluetoothConfig *config){
+int hc05_setrtspin(struct BluetoothConfig *config) {
 
     if(!config || !(config->myhc05config))
         return EXIT_FAILURE;
 
-    switch (config->myhc05config->rtsport){
+    switch (config->myhc05config->rtsport) {
 
-        case gpioa_port:
-            palSetPadMode(GPIOA, config->myhc05config->rtspin,
-                          config->myhc05config->rtsalternatefunction < 0
-                          ? (PAL_MODE_OUTPUT_PUSHPULL | PAL_STM32_OSPEED_HIGHEST)
-                          : PAL_MODE_ALTERNATE(config->myhc05config->rtsalternatefunction));
-            break;
-        case gpiob_port:
-            palSetPadMode(GPIOB, config->myhc05config->rtspin,
-                          config->myhc05config->rtsalternatefunction < 0
-                          ? (PAL_MODE_OUTPUT_PUSHPULL | PAL_STM32_OSPEED_HIGHEST)
-                          : PAL_MODE_ALTERNATE(config->myhc05config->rtsalternatefunction));
-            break;
-        case gpioc_port:
-            palSetPadMode(GPIOC, config->myhc05config->rtspin,
-                          config->myhc05config->rtsalternatefunction < 0
-                          ? (PAL_MODE_OUTPUT_PUSHPULL | PAL_STM32_OSPEED_HIGHEST)
-                          : PAL_MODE_ALTERNATE(config->myhc05config->rtsalternatefunction));
-            break;
-        case gpiod_port:
-            palSetPadMode(GPIOD, config->myhc05config->rtspin,
-                          config->myhc05config->rtsalternatefunction < 0
-                          ? (PAL_MODE_OUTPUT_PUSHPULL | PAL_STM32_OSPEED_HIGHEST)
-                          : PAL_MODE_ALTERNATE(config->myhc05config->rtsalternatefunction));
-            break;
-        case gpioe_port:
-            palSetPadMode(GPIOE, config->myhc05config->rtspin,
-                          config->myhc05config->rtsalternatefunction < 0
-                          ? (PAL_MODE_OUTPUT_PUSHPULL | PAL_STM32_OSPEED_HIGHEST)
-                          : PAL_MODE_ALTERNATE(config->myhc05config->rtsalternatefunction));
-            break;
-        
-        default:
-            return EXIT_FAILURE;
-            break;
+    case gpioa_port:
+        palSetPadMode(GPIOA, config->myhc05config->rtspin,
+                      PAL_MODE_STM32_ALTERNATE_PUSHPULL);
+        break;
+    case gpiob_port:
+        palSetPadMode(GPIOB, config->myhc05config->rtspin,
+                      PAL_MODE_STM32_ALTERNATE_PUSHPULL);
+        break;
+    case gpioc_port:
+        palSetPadMode(GPIOC, config->myhc05config->rtspin,
+                      PAL_MODE_STM32_ALTERNATE_PUSHPULL);
+        break;
+    case gpiod_port:
+        palSetPadMode(GPIOD, config->myhc05config->rtspin,
+                      PAL_MODE_STM32_ALTERNATE_PUSHPULL);
+        break;
+    case gpioe_port:
+        palSetPadMode(GPIOE, config->myhc05config->rtspin,
+                      PAL_MODE_STM32_ALTERNATE_PUSHPULL);
+        break;
+    default:
+        return EXIT_FAILURE;
+        break;
     }
     return EXIT_SUCCESS;
 }
@@ -509,46 +480,36 @@ int hc05_setrtspin(struct BluetoothConfig *config){
  * \param[in] config A BluetoothConfig object
  * \return EXIT_SUCCESS or EXIT_FAILURE
  */
-int hc05_setctspin(struct BluetoothConfig *config){
+int hc05_setctspin(struct BluetoothConfig *config) {
 
     if(!config || !(config->myhc05config))
         return EXIT_FAILURE;
 
-    switch (config->myhc05config->ctsport){
+    switch (config->myhc05config->ctsport) {
 
-        case gpioa_port:
-            palSetPadMode(GPIOA, config->myhc05config->ctspin,
-                          config->myhc05config->ctsalternatefunction < 0
-                          ? (PAL_MODE_OUTPUT_PUSHPULL | PAL_STM32_OSPEED_HIGHEST)
-                          : PAL_MODE_ALTERNATE(config->myhc05config->ctsalternatefunction));
-            break;
-        case gpiob_port:
-            palSetPadMode(GPIOB, config->myhc05config->ctspin,
-                          config->myhc05config->ctsalternatefunction < 0
-                          ? (PAL_MODE_OUTPUT_PUSHPULL | PAL_STM32_OSPEED_HIGHEST)
-                          : PAL_MODE_ALTERNATE(config->myhc05config->ctsalternatefunction));
-            break;
-        case gpioc_port:
-            palSetPadMode(GPIOC, config->myhc05config->ctspin,
-                          config->myhc05config->ctsalternatefunction < 0
-                          ? (PAL_MODE_OUTPUT_PUSHPULL | PAL_STM32_OSPEED_HIGHEST)
-                          : PAL_MODE_ALTERNATE(config->myhc05config->ctsalternatefunction));
-            break;
-        case gpiod_port:
-            palSetPadMode(GPIOD, config->myhc05config->ctspin,
-                          config->myhc05config->ctsalternatefunction < 0
-                          ? (PAL_MODE_OUTPUT_PUSHPULL | PAL_STM32_OSPEED_HIGHEST)
-                          : PAL_MODE_ALTERNATE(config->myhc05config->ctsalternatefunction));
-            break;
-        case gpioe_port:
-            palSetPadMode(GPIOE, config->myhc05config->ctspin,
-                          config->myhc05config->ctsalternatefunction < 0
-                          ? (PAL_MODE_OUTPUT_PUSHPULL | PAL_STM32_OSPEED_HIGHEST)
-                          : PAL_MODE_ALTERNATE(config->myhc05config->ctsalternatefunction));
-           
-        default:
-            return EXIT_FAILURE;
-            break;
+    case gpioa_port:
+        palSetPadMode(GPIOA, config->myhc05config->ctspin,
+                      PAL_MODE_STM32_ALTERNATE_PUSHPULL);
+        break;
+    case gpiob_port:
+        palSetPadMode(GPIOB, config->myhc05config->ctspin,
+                      PAL_MODE_STM32_ALTERNATE_PUSHPULL);
+        break;
+    case gpioc_port:
+        palSetPadMode(GPIOC, config->myhc05config->ctspin,
+                      PAL_MODE_STM32_ALTERNATE_PUSHPULL);
+        break;
+    case gpiod_port:
+        palSetPadMode(GPIOD, config->myhc05config->ctspin,
+                      PAL_MODE_STM32_ALTERNATE_PUSHPULL);
+        break;
+    case gpioe_port:
+        palSetPadMode(GPIOE, config->myhc05config->ctspin,
+                      PAL_MODE_STM32_ALTERNATE_PUSHPULL);
+        break;
+    default:
+        return EXIT_FAILURE;
+        break;
     }
     return EXIT_SUCCESS;
 }
@@ -560,37 +521,31 @@ int hc05_setctspin(struct BluetoothConfig *config){
  * \param[in] config A BluetoothConfig object
  * \return EXIT_SUCCESS or EXIT_FAILURE
  */
-int hc05_setresetpin(struct BluetoothConfig *config){
+int hc05_setresetpin(struct BluetoothConfig *config) {
 
     if(!config || !(config->myhc05config))
         return EXIT_FAILURE;
 
-    switch (config->myhc05config->resetport){
+    switch (config->myhc05config->resetport) {
 
-        case gpioa_port:
-            palSetPadMode(GPIOA, config->myhc05config->resetpin,
-                          (PAL_MODE_OUTPUT_PUSHPULL | PAL_STM32_OSPEED_HIGHEST));
-            break;
-        case gpiob_port:
-            palSetPadMode(GPIOB, config->myhc05config->resetpin,
-                          (PAL_MODE_OUTPUT_PUSHPULL | PAL_STM32_OSPEED_HIGHEST));
-            break;
-        case gpioc_port:
-            palSetPadMode(GPIOC, config->myhc05config->resetpin,
-                          (PAL_MODE_OUTPUT_PUSHPULL | PAL_STM32_OSPEED_HIGHEST));
-            break;
-        case gpiod_port:
-            palSetPadMode(GPIOD, config->myhc05config->resetpin,
-                          (PAL_MODE_OUTPUT_PUSHPULL | PAL_STM32_OSPEED_HIGHEST));
-            break;
-        case gpioe_port:
-            palSetPadMode(GPIOE, config->myhc05config->resetpin,
-                          (PAL_MODE_OUTPUT_PUSHPULL | PAL_STM32_OSPEED_HIGHEST));
-           
-            break;
-        default:
-            return EXIT_FAILURE;
-            break;
+    case gpioa_port:
+        palSetPadMode(GPIOA, config->myhc05config->resetpin, PAL_MODE_STM32_ALTERNATE_PUSHPULL);
+        break;
+    case gpiob_port:
+        palSetPadMode(GPIOB, config->myhc05config->resetpin, PAL_MODE_STM32_ALTERNATE_PUSHPULL);
+        break;
+    case gpioc_port:
+        palSetPadMode(GPIOC, config->myhc05config->resetpin, PAL_MODE_STM32_ALTERNATE_PUSHPULL);
+        break;
+    case gpiod_port:
+        palSetPadMode(GPIOD, config->myhc05config->resetpin, PAL_MODE_STM32_ALTERNATE_PUSHPULL);
+        break;
+    case gpioe_port:
+        palSetPadMode(GPIOE, config->myhc05config->resetpin, PAL_MODE_STM32_ALTERNATE_PUSHPULL);
+        break;
+    default:
+        return EXIT_FAILURE;
+        break;
     }
     return EXIT_SUCCESS;
 }
@@ -602,32 +557,31 @@ int hc05_setresetpin(struct BluetoothConfig *config){
  * \param[in] config A BluetoothConfig object
  * \return EXIT_SUCCESS or EXIT_FAILURE
  */
-int hc05_setkeypin(struct BluetoothConfig *config){
+int hc05_setkeypin(struct BluetoothConfig *config) {
 
     if(!config || !(config->myhc05config))
         return EXIT_FAILURE;
 
-    switch (config->myhc05config->keyport){
+    switch (config->myhc05config->keyport) {
 
-        case gpioa_port:
-            palSetPadMode(GPIOA, config->myhc05config->keypin,
-                          (PAL_MODE_OUTPUT_PUSHPULL | PAL_STM32_OSPEED_HIGHEST));
-            break;
-        case gpiob_port:
-            palSetPadMode(GPIOB, config->myhc05config->keypin,
-                          (PAL_MODE_OUTPUT_PUSHPULL | PAL_STM32_OSPEED_HIGHEST));
-            break;
-        case gpioc_port:
-            palSetPadMode(GPIOC, config->myhc05config->keypin,
-                          (PAL_MODE_OUTPUT_PUSHPULL | PAL_STM32_OSPEED_HIGHEST));
-            break;
-        case gpiod_port:
-            palSetPadMode(GPIOD, config->myhc05config->keypin,
-                          (PAL_MODE_OUTPUT_PUSHPULL | PAL_STM32_OSPEED_HIGHEST));
-           
-        default:
-            return EXIT_FAILURE;
-            break;
+    case gpioa_port:
+        palSetPadMode(GPIOA, config->myhc05config->keypin, PAL_MODE_STM32_ALTERNATE_PUSHPULL);
+        break;
+    case gpiob_port:
+        palSetPadMode(GPIOB, config->myhc05config->keypin, PAL_MODE_STM32_ALTERNATE_PUSHPULL);
+        break;
+    case gpioc_port:
+        palSetPadMode(GPIOC, config->myhc05config->keypin, PAL_MODE_STM32_ALTERNATE_PUSHPULL);
+        break;
+    case gpiod_port:
+        palSetPadMode(GPIOD, config->myhc05config->keypin, PAL_MODE_STM32_ALTERNATE_PUSHPULL);
+        break;
+    case gpioe_port:
+        palSetPadMode(GPIOE, config->myhc05config->keypin, PAL_MODE_STM32_ALTERNATE_PUSHPULL);
+        break;
+    default:
+        return EXIT_FAILURE;
+        break;
     }
     return EXIT_SUCCESS;
 }
@@ -639,40 +593,40 @@ int hc05_setkeypin(struct BluetoothConfig *config){
  * \param[in] config A BluetoothConfig object
  * \return EXIT_SUCCESS or EXIT_FAILURE
  */
-int hc05_updateserialconfig(struct BluetoothConfig *config){
+int hc05_updateserialconfig(struct BluetoothConfig *config) {
 
     if(!config || !(config->myhc05config))
         return EXIT_FAILURE;
 
     switch (config->baudrate) {
 
-        case b1200:
-            hc05SerialConfig.speed = 1200;
-            break;
-        case b2400:
-            hc05SerialConfig.speed = 2400;
-            break;
-        case b4800:
-            hc05SerialConfig.speed = 4800;
-            break;
-        case b9600:
-            hc05SerialConfig.speed = 9600;
-            break;
-        case b19200:
-            hc05SerialConfig.speed = 19200;
-            break;
-        case b38400:
-            hc05SerialConfig.speed = 38400;
-            break;
-        case b57600:
-            hc05SerialConfig.speed = 57600;
-            break;
-        case b115200:
-            hc05SerialConfig.speed = 115200;
-            break;
-        default:
-            hc05SerialConfig.speed = BLUETOOTH_DEFAULT_BITRATE;
-            break;
+    case b1200:
+        hc05SerialConfig.speed = 1200;
+        break;
+    case b2400:
+        hc05SerialConfig.speed = 2400;
+        break;
+    case b4800:
+        hc05SerialConfig.speed = 4800;
+        break;
+    case b9600:
+        hc05SerialConfig.speed = 9600;
+        break;
+    case b19200:
+        hc05SerialConfig.speed = 19200;
+        break;
+    case b38400:
+        hc05SerialConfig.speed = 38400;
+        break;
+    case b57600:
+        hc05SerialConfig.speed = 57600;
+        break;
+    case b115200:
+        hc05SerialConfig.speed = 115200;
+        break;
+    default:
+        hc05SerialConfig.speed = BLUETOOTH_DEFAULT_BITRATE;
+        break;
     }
 
     return EXIT_SUCCESS;
@@ -686,7 +640,7 @@ int hc05_updateserialconfig(struct BluetoothConfig *config){
  * \param[in] config A BluetoothConfig object
  * \return EXIT_SUCCESS or EXIT_FAILURE
  */
-int hc05_startserial(struct BluetoothConfig *config){
+int hc05_startserial(struct BluetoothConfig *config) {
 
     if(!config || !(config->myhc05config))
         return EXIT_FAILURE;
@@ -694,42 +648,29 @@ int hc05_startserial(struct BluetoothConfig *config){
     switch (config->myhc05config->serialdriver) {
 
 #if STM32_SERIAL_USE_USART1 == TRUE
-        case sd1:
-            config->myhc05config->hc05serialpointer = &SD1;
-            sdStart(&SD1, &hc05SerialConfig);
-            break;
+    case sd1:
+        config->myhc05config->hc05serialpointer = &SD1;
+        sdStart(&SD1, &hc05SerialConfig);
+        break;
 #endif
 
 #if STM32_SERIAL_USE_USART2 == TRUE
-        case sd2:
-            config->myhc05config->hc05serialpointer = &SD2;
-            sdStart(&SD2, &hc05SerialConfig);
-            break;
+    case sd2:
+        config->myhc05config->hc05serialpointer = &SD2;
+        sdStart(&SD2, &hc05SerialConfig);
+        break;
 #endif
 
 #if STM32_SERIAL_USE_USART3 == TRUE
-        case sd3:
-            config->myhc05config->hc05serialpointer = &SD3;
-            sdStart(&SD3, &hc05SerialConfig);
-            break;
+    case sd3:
+        config->myhc05config->hc05serialpointer = &SD3;
+        sdStart(&SD3, &hc05SerialConfig);
+        break;
 #endif
 
-#if STM32_SERIAL_USE_UART4 == TRUE
-        case sd4:
-            config->myhc05config->hc05serialpointer = &SD4;
-            sdStart(&SD4, &hc05SerialConfig);
-            break;
-#endif
-
-#if STM32_SERIAL_USE_UART5 == TRUE
-        case sd5:
-            config->myhc05config->hc05serialpointer = &SD5;
-            sdStart(&SD5, &hc05SerialConfig);
-            break;
-#endif
-        default:
-            return EXIT_FAILURE;
-            break;
+    default:
+        return EXIT_FAILURE;
+        break;
     }
     return EXIT_SUCCESS;
 }
@@ -742,7 +683,7 @@ int hc05_startserial(struct BluetoothConfig *config){
  * \param[in] config A BluetoothConfig object
  * \return EXIT_SUCCESS or EXIT_FAILURE
  */
-int hc05_stopserial(struct BluetoothConfig *config){
+int hc05_stopserial(struct BluetoothConfig *config) {
 
     if(!config || !(config->myhc05config))
         return EXIT_FAILURE;
@@ -750,33 +691,23 @@ int hc05_stopserial(struct BluetoothConfig *config){
     switch (config->myhc05config->serialdriver) {
 
 #if STM32_SERIAL_USE_USART1 == TRUE
-        case sd1:
-            sdStop(&SD1);
-            break;
+    case sd1:
+        sdStop(&SD1);
+        break;
 #endif
 #if STM32_SERIAL_USE_USART2 == TRUE
-        case sd2:
-            sdStop(&SD2);
-            break;
+    case sd2:
+        sdStop(&SD2);
+        break;
 #endif
 #if STM32_SERIAL_USE_USART3 == TRUE
-        case sd3:
-            sdStop(&SD3);
-            break;
+    case sd3:
+        sdStop(&SD3);
+        break;
 #endif
-#if STM32_SERIAL_USE_UART4 == TRUE
-        case sd4:
-            sdStop(&SD4);
-            break;
-#endif
-#if STM32_SERIAL_USE_UART5 == TRUE
-        case sd5:
-            sdStop(&SD5);
-            break;
-#endif
-        default:
-            return EXIT_FAILURE;
-            break;
+    default:
+        return EXIT_FAILURE;
+        break;
     }
     return EXIT_SUCCESS;
 }
@@ -788,7 +719,7 @@ int hc05_stopserial(struct BluetoothConfig *config){
  * \param[in] config A BluetoothConfig object
  * \param[in] timeout Time to wait in milliseconds
  */
-void hc05SetModeAt(struct BluetoothConfig *config, uint16_t timeout){
+void hc05SetModeAt(struct BluetoothConfig *config, uint16_t timeout) {
 
     if(!config)
         return;
@@ -796,11 +727,11 @@ void hc05SetModeAt(struct BluetoothConfig *config, uint16_t timeout){
     //reset module (low), pull key high
 
     palSetPad((((config->myhc05config->keyport) == gpioa_port) ? GPIOA :
-              ((config->myhc05config->keyport) == gpiob_port) ? GPIOB :
-              ((config->myhc05config->keyport) == gpioc_port) ? GPIOC :
-              ((config->myhc05config->keyport) == gpiod_port) ? GPIOD :
-              ((config->myhc05config->keyport) == gpioe_port) ? GPIOE :
-              NULL),
+               ((config->myhc05config->keyport) == gpiob_port) ? GPIOB :
+               ((config->myhc05config->keyport) == gpioc_port) ? GPIOC :
+               ((config->myhc05config->keyport) == gpiod_port) ? GPIOD :
+               ((config->myhc05config->keyport) == gpioe_port) ? GPIOE :
+               NULL),
               (config->myhc05config->keypin));
 
 
@@ -808,23 +739,23 @@ void hc05SetModeAt(struct BluetoothConfig *config, uint16_t timeout){
 
 
     palClearPad((((config->myhc05config->resetport) == gpioa_port) ? GPIOA :
-              ((config->myhc05config->resetport) == gpiob_port) ? GPIOB :
-              ((config->myhc05config->resetport) == gpioc_port) ? GPIOC :
-              ((config->myhc05config->resetport) == gpiod_port) ? GPIOD :
-              ((config->myhc05config->resetport) == gpioe_port) ? GPIOE :
-              NULL),
-              (config->myhc05config->resetpin));
+                 ((config->myhc05config->resetport) == gpiob_port) ? GPIOB :
+                 ((config->myhc05config->resetport) == gpioc_port) ? GPIOC :
+                 ((config->myhc05config->resetport) == gpiod_port) ? GPIOD :
+                 ((config->myhc05config->resetport) == gpioe_port) ? GPIOE :
+                 NULL),
+                (config->myhc05config->resetpin));
 
 
 
     chThdSleepMilliseconds(timeout);   //wait for reset
 
     palSetPad((((config->myhc05config->resetport) == gpioa_port) ? GPIOA :
-              ((config->myhc05config->resetport) == gpiob_port) ? GPIOB :
-              ((config->myhc05config->resetport) == gpioc_port) ? GPIOC :
-              ((config->myhc05config->resetport) == gpiod_port) ? GPIOD :
-              ((config->myhc05config->resetport) == gpioe_port) ? GPIOE :
-              NULL),
+               ((config->myhc05config->resetport) == gpiob_port) ? GPIOB :
+               ((config->myhc05config->resetport) == gpioc_port) ? GPIOC :
+               ((config->myhc05config->resetport) == gpiod_port) ? GPIOD :
+               ((config->myhc05config->resetport) == gpioe_port) ? GPIOE :
+               NULL),
               (config->myhc05config->resetpin));
 
 
@@ -841,40 +772,40 @@ void hc05SetModeAt(struct BluetoothConfig *config, uint16_t timeout){
  * \param[in] config A BluetoothConfig object
  * \param[in] timeout Time to wait in milliseconds
  */
-void hc05SetModeComm(struct BluetoothConfig *config, uint16_t timeout){
+void hc05SetModeComm(struct BluetoothConfig *config, uint16_t timeout) {
 
     if(!config)
         return;
 
     //reset module (low), pull key low
     palClearPad((((config->myhc05config->keyport) == gpioa_port) ? GPIOA :
-              ((config->myhc05config->keyport) == gpiob_port) ? GPIOB :
-              ((config->myhc05config->keyport) == gpioc_port) ? GPIOC :
-              ((config->myhc05config->keyport) == gpiod_port) ? GPIOD :
-              ((config->myhc05config->keyport) == gpioe_port) ? GPIOE :
-              NULL),
-              (config->myhc05config->keypin));
+                 ((config->myhc05config->keyport) == gpiob_port) ? GPIOB :
+                 ((config->myhc05config->keyport) == gpioc_port) ? GPIOC :
+                 ((config->myhc05config->keyport) == gpiod_port) ? GPIOD :
+                 ((config->myhc05config->keyport) == gpioe_port) ? GPIOE :
+                 NULL),
+                (config->myhc05config->keypin));
 
     chThdSleepMilliseconds(timeout);
 
 
     palClearPad((((config->myhc05config->resetport) == gpioa_port) ? GPIOA :
-              ((config->myhc05config->resetport) == gpiob_port) ? GPIOB :
-              ((config->myhc05config->resetport) == gpioc_port) ? GPIOC :
-              ((config->myhc05config->resetport) == gpiod_port) ? GPIOD :
-              ((config->myhc05config->resetport) == gpioe_port) ? GPIOE :
-              NULL),
-              (config->myhc05config->resetpin));
+                 ((config->myhc05config->resetport) == gpiob_port) ? GPIOB :
+                 ((config->myhc05config->resetport) == gpioc_port) ? GPIOC :
+                 ((config->myhc05config->resetport) == gpiod_port) ? GPIOD :
+                 ((config->myhc05config->resetport) == gpioe_port) ? GPIOE :
+                 NULL),
+                (config->myhc05config->resetpin));
 
 
     chThdSleepMilliseconds(timeout);   //wait for reset
 
     palSetPad((((config->myhc05config->resetport) == gpioa_port) ? GPIOA :
-              ((config->myhc05config->resetport) == gpiob_port) ? GPIOB :
-              ((config->myhc05config->resetport) == gpioc_port) ? GPIOC :
-              ((config->myhc05config->resetport) == gpiod_port) ? GPIOD :
-              ((config->myhc05config->resetport) == gpioe_port) ? GPIOE :
-              NULL),
+               ((config->myhc05config->resetport) == gpiob_port) ? GPIOB :
+               ((config->myhc05config->resetport) == gpioc_port) ? GPIOC :
+               ((config->myhc05config->resetport) == gpiod_port) ? GPIOD :
+               ((config->myhc05config->resetport) == gpioe_port) ? GPIOE :
+               NULL),
               (config->myhc05config->resetpin));
 
 
@@ -883,4 +814,4 @@ void hc05SetModeComm(struct BluetoothConfig *config, uint16_t timeout){
 };
 
 #endif //HAL_USE_HC_05_BLUETOOTH || defined(__DOXYGEN__)
- /** @} */
+/** @} */

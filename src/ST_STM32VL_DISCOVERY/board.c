@@ -24,11 +24,11 @@
 #if HAL_USE_PAL || defined(__DOXYGEN__)
 const PALConfig pal_default_config =
 {
-  {VAL_GPIOAODR, VAL_GPIOACRL, VAL_GPIOACRH},
-  {VAL_GPIOBODR, VAL_GPIOBCRL, VAL_GPIOBCRH},
-  {VAL_GPIOCODR, VAL_GPIOCCRL, VAL_GPIOCCRH},
-  {VAL_GPIODODR, VAL_GPIODCRL, VAL_GPIODCRH},
-  {VAL_GPIOEODR, VAL_GPIOECRL, VAL_GPIOECRH},
+    {VAL_GPIOAODR, VAL_GPIOACRL, VAL_GPIOACRH},
+    {VAL_GPIOBODR, VAL_GPIOBCRL, VAL_GPIOBCRH},
+    {VAL_GPIOCODR, VAL_GPIOCCRL, VAL_GPIOCCRH},
+    {VAL_GPIODODR, VAL_GPIODCRL, VAL_GPIODCRH},
+    {VAL_GPIOEODR, VAL_GPIOECRL, VAL_GPIOECRH},
 };
 #endif
 
@@ -39,25 +39,25 @@ const PALConfig pal_default_config =
  */
 void __early_init(void) {
 
-  stm32_clock_init();
+    stm32_clock_init();
 }
 
 /*
  * Board-specific initialization code.
  */
 void boardInit(void) {
-	
-	/*
-		USART3 re-mapped to PC10-PC11
-	*/
 
-	AFIO -> MAPR |= AFIO_MAPR_USART3_REMAP_PARTIALREMAP;
+    /*
+    	USART3 re-mapped to PC10-PC11
+    */
 
-	/*
-		del AFIO typedef, el campo o atributo MAPR se cambia (se hace una OR), para remap en este caso se usa el USART
-		http://stm32.kosyak.info/doc/stm32f10x_8h_source.html ->> 02606 #define AFIO_MAPR_USART3_REMAP_PARTIALRMAP, y
-		02594 ****************************** Bit definition for AFIO_MAPR register ************************
-		http://stm32.kosyak.info/doc/struct_a_f_i_o___type_def.html -->> el Typedef AFIO
-	*/
-	
+    AFIO -> MAPR |= AFIO_MAPR_USART3_REMAP_PARTIALREMAP;
+
+    /*
+    	del AFIO typedef, el campo o atributo MAPR se cambia (se hace una OR), para remap en este caso se usa el USART
+    	http://stm32.kosyak.info/doc/stm32f10x_8h_source.html ->> 02606 #define AFIO_MAPR_USART3_REMAP_PARTIALRMAP, y
+    	02594 ****************************** Bit definition for AFIO_MAPR register ************************
+    	http://stm32.kosyak.info/doc/struct_a_f_i_o___type_def.html -->> el Typedef AFIO
+    */
+
 }

@@ -14,8 +14,8 @@ APLICACIÓN (70 %)
 
 - Arquitectura del sistema
 
-** Esquematizar el proyecto en bloques: procesador, puertos, periféricos, mundo exterior
-** Arquitectura de código acorde a los bloques funcionales y dividida de la misma manera
+** Esquematizar el proyecto en bloques: procesador, puertos, periféricos, mundo exterior OK
+** Arquitectura de código acorde a los bloques funcionales y dividida de la misma manera 
 
 - Prototipado y pruebas
 
@@ -23,7 +23,7 @@ APLICACIÓN (70 %)
 
 - Docuementación
 
-** Wiki explicando todo lo anterior (trabajo paralelo)
+** Wiki explicando todo lo anterior (trabajo paralelo) IN PROGRESS
 
 EVLUACIÓN (20 %)
 
