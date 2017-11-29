@@ -80,9 +80,13 @@ int btRead(struct BluetoothDriver *instance, char *buffer, int maxlen) {
     if (!instance || !buffer || maxlen == 0)
         return EXIT_FAILURE;
 
+	chprintf((BaseChannel *)&SD3, "Passed first verification \n\r");
+
     //we have incoming data ready to be served
     if (instance->vmt->canRecieve(instance))
         return instance->vmt->readBuffer(instance, buffer, maxlen);;
+
+	chprintf((BaseChannel *)&SD3, "Nothing read \n\r");
 
     return EXIT_FAILURE;
 }

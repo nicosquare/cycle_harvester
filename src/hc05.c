@@ -51,6 +51,8 @@ static volatile enum hc05_state_t hc05CurrentState = st_unknown;
  * \return EXIT_SUCCESS or EXIT_FAILURE
  */
 int hc05sendBuffer(struct BluetoothDriver *instance, char *buffer, int bufferlength) {
+	
+	chprintf((BaseChannel *)&SD3, "HC-05 Send Buffer \n\r");
 
     if ( !instance || !buffer )
         return EXIT_FAILURE;
@@ -72,6 +74,8 @@ int hc05sendBuffer(struct BluetoothDriver *instance, char *buffer, int bufferlen
  */
 int hc05sendByte(struct BluetoothDriver *instance, int mybyte) {
 
+	chprintf((BaseChannel *)&SD3, "HC-05 Send Byte \n\r");
+
     if ( !instance )
         return EXIT_FAILURE;
 
@@ -87,8 +91,12 @@ int hc05sendByte(struct BluetoothDriver *instance, int mybyte) {
  */
 int hc05canRecieve(struct BluetoothDriver *instance) {
 
+	chprintf((BaseChannel *)&SD3, "HC-05 Can receive \n\r");
+
     if ( !instance )
         return EXIT_FAILURE;
+
+	chprintf((BaseChannel *)&SD3, "HC-05 Can receive instance OK \n\r");
 
     return sdGetWouldBlock(instance->config->myhc05config->hc05serialpointer) == 0 ? 1 : 0;
 
@@ -103,6 +111,8 @@ int hc05canRecieve(struct BluetoothDriver *instance) {
  * \return EXIT_SUCCESS or EXIT_FAILURE
  */
 int hc05readBuffer(struct BluetoothDriver *instance, char *buffer, int maxlength) {
+
+	chprintf((BaseChannel *)&SD3, "HC-05 Read Buffer \n\r");
 
     if ( !instance || !buffer )
         return EXIT_FAILURE;
@@ -123,6 +133,8 @@ int hc05readBuffer(struct BluetoothDriver *instance, char *buffer, int maxlength
 *	\return EXIT_SUCCESS or EXIT_FAILURE
 */
 int hc05sendAtCommand(struct BluetoothDriver *instance, char* command) {
+
+	chprintf((BaseChannel *)&SD3, "HC-05 Send At Command \n\r");
 
     if ( !instance || !command )
         return EXIT_FAILURE;
@@ -162,6 +174,8 @@ int hc05sendAtCommand(struct BluetoothDriver *instance, char* command) {
  */
 int hc05setPinCode(struct BluetoothDriver *instance, char *pin, int pinlength) {
 
+	chprintf((BaseChannel *)&SD3, "HC-05 Set Pin Code \n\r");
+
     if ( !instance || !pin )
         return EXIT_FAILURE;
 
@@ -200,6 +214,8 @@ int hc05setPinCode(struct BluetoothDriver *instance, char *pin, int pinlength) {
  */
 int hc05setName(struct BluetoothDriver *instance, char *newname, int namelength) {
 
+	chprintf((BaseChannel *)&SD3, "HC-05 Set name \n\r");
+
     if ( !instance || !newname )
         return EXIT_FAILURE;
 
@@ -235,6 +251,8 @@ int hc05setName(struct BluetoothDriver *instance, char *newname, int namelength)
  * \return EXIT_SUCCESS or EXIT_FAILURE
  */
 int hc05resetDefaults(struct BluetoothDriver *instance) {
+
+	chprintf((BaseChannel *)&SD3, "HC-05 Reset defaults \n\r");
 
     if ( !instance )
         return EXIT_FAILURE;
@@ -277,6 +295,8 @@ int hc05resetDefaults(struct BluetoothDriver *instance) {
  */
 int hc05open(struct BluetoothDriver *instance, struct  BluetoothConfig *config) {
 
+	chprintf((BaseChannel *)&SD3, "Open HC05 module\n\r");
+
     if(!instance || !config || !(config->myhc05config))
         return EXIT_FAILURE;
 
@@ -313,6 +333,8 @@ int hc05open(struct BluetoothDriver *instance, struct  BluetoothConfig *config) 
  * \return EXIT_SUCCESS or EXIT_FAILURE
  */
 int hc05close(struct BluetoothDriver *instance) {
+	
+	chprintf((BaseChannel *)&SD3, "Close HC05 module\n\r");
 
     if(!instance)
         return EXIT_FAILURE;
@@ -358,6 +380,8 @@ struct BluetoothDeviceVMT hc05BtDevVMT = {
  */
 int hc05_settxpin(struct BluetoothConfig *config) {
 
+	chprintf((BaseChannel *)&SD3, "Set TX pin\n\r");
+
     if(!config || !(config->myhc05config))
         return EXIT_FAILURE;
 
@@ -398,6 +422,8 @@ int hc05_settxpin(struct BluetoothConfig *config) {
  * \return EXIT_SUCCESS or EXIT_FAILURE
  */
 int hc05_setrxpin(struct BluetoothConfig *config) {
+
+	chprintf((BaseChannel *)&SD3, "Set RX pin\n\r");
 
     if(!config || !(config->myhc05config))
         return EXIT_FAILURE;
@@ -440,6 +466,8 @@ int hc05_setrxpin(struct BluetoothConfig *config) {
  */
 int hc05_setrtspin(struct BluetoothConfig *config) {
 
+	chprintf((BaseChannel *)&SD3, "Set RTS pin\n\r");
+
     if(!config || !(config->myhc05config))
         return EXIT_FAILURE;
 
@@ -481,6 +509,8 @@ int hc05_setrtspin(struct BluetoothConfig *config) {
  * \return EXIT_SUCCESS or EXIT_FAILURE
  */
 int hc05_setctspin(struct BluetoothConfig *config) {
+	
+	chprintf((BaseChannel *)&SD3, "Set CTS pin\n\r");
 
     if(!config || !(config->myhc05config))
         return EXIT_FAILURE;
@@ -523,6 +553,8 @@ int hc05_setctspin(struct BluetoothConfig *config) {
  */
 int hc05_setresetpin(struct BluetoothConfig *config) {
 
+	chprintf((BaseChannel *)&SD3, "Set RESET pin\n\r");
+	
     if(!config || !(config->myhc05config))
         return EXIT_FAILURE;
 
@@ -559,6 +591,8 @@ int hc05_setresetpin(struct BluetoothConfig *config) {
  */
 int hc05_setkeypin(struct BluetoothConfig *config) {
 
+	chprintf((BaseChannel *)&SD3, "Set KEY(EN) pin\n\r");
+
     if(!config || !(config->myhc05config))
         return EXIT_FAILURE;
 
@@ -594,6 +628,9 @@ int hc05_setkeypin(struct BluetoothConfig *config) {
  * \return EXIT_SUCCESS or EXIT_FAILURE
  */
 int hc05_updateserialconfig(struct BluetoothConfig *config) {
+
+	chprintf((BaseChannel *)&SD3, "Update serial config\n\r");
+
 
     if(!config || !(config->myhc05config))
         return EXIT_FAILURE;
@@ -641,6 +678,8 @@ int hc05_updateserialconfig(struct BluetoothConfig *config) {
  * \return EXIT_SUCCESS or EXIT_FAILURE
  */
 int hc05_startserial(struct BluetoothConfig *config) {
+		
+	chprintf((BaseChannel *)&SD3, "Start serial driver\n\r");
 
     if(!config || !(config->myhc05config))
         return EXIT_FAILURE;
@@ -684,6 +723,8 @@ int hc05_startserial(struct BluetoothConfig *config) {
  * \return EXIT_SUCCESS or EXIT_FAILURE
  */
 int hc05_stopserial(struct BluetoothConfig *config) {
+	
+	chprintf((BaseChannel *)&SD3, "Stop serial driver\n\r");
 
     if(!config || !(config->myhc05config))
         return EXIT_FAILURE;
@@ -720,6 +761,8 @@ int hc05_stopserial(struct BluetoothConfig *config) {
  * \param[in] timeout Time to wait in milliseconds
  */
 void hc05SetModeAt(struct BluetoothConfig *config, uint16_t timeout) {
+
+	chprintf((BaseChannel *)&SD3, "Set AT mode\n\r");
 
     if(!config)
         return;
@@ -773,6 +816,8 @@ void hc05SetModeAt(struct BluetoothConfig *config, uint16_t timeout) {
  * \param[in] timeout Time to wait in milliseconds
  */
 void hc05SetModeComm(struct BluetoothConfig *config, uint16_t timeout) {
+
+	chprintf((BaseChannel *)&SD3, "Set comm mode\n\r");
 
     if(!config)
         return;
