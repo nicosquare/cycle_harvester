@@ -16,9 +16,12 @@ const server = http.createServer((req, res) => {
 	res.write('<p>LED state: <a href="?LED=ON"> <button>ON</button></a>');
 	res.write('  <a href="?LED=OFF"><button>OFF</button></a></p>');
 	res.end();
-
 });
- 
+
+
+  
 server.listen(port, hostname, () => {
+	ina219.setCalibration_32V_1A();
+	console.log("THIS IS A TEST");
 	console.log(`Server running at http://${hostname}:${port}/`);
 });
