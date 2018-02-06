@@ -1,0 +1,23 @@
+{
+  "name": "harvester",
+  "version": "1.0.0",
+  "description": "Cycle's Harvester demo",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nicosquare/wat_harvester/"
+  },
+  "keywords": [
+    "cycle",
+    "harvester",
+    "energy",
+    "world",
+    "government",
+    "summit"
+  ],
+  "author": "Nicolas Cuadrado, David Arevalo",
+  "license": "ISC"
+}
