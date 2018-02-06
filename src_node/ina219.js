@@ -215,25 +215,24 @@ const INA219_REG_CALIBRATION = 0x05;
 class Adafruit_INA219 {
 
 	constructor(device_address){
+		
+		// Attributes
+	
+		this.woWire = '_i2c';
 
+		this.ina219_i2caddr;
+		this.ina219_calValue;
+
+		// The following multipliers are used to convert raw current and power
+		// values to mA and mW, taking into account the current config settings
+
+		this.ina219_currentDivider_mA;
+		this.ina219_powerMultiplier_mW;
+		
 		this.device_address = device_address;
 
-	},
-  
-	// Attributes
-	
-	woWire = '_i2c',
-
-	ina219_i2caddr,
-	ina219_calValue,
-
-	// The following multipliers are used to convert raw current and power
-	// values to mA and mW, taking into account the current config settings
-
-	ina219_currentDivider_mA,
-	ina219_powerMultiplier_mW,
-
-
+	};
+ 
 	// Method definition
 
 

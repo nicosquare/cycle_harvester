@@ -1,5 +1,6 @@
 exec = require('child_process').exec;
 os = require('os');
+ina219 = require('./ina219');
 
 const http = require('http');
 const hostname = os.networkInterfaces()['apcli0'][0].address;
