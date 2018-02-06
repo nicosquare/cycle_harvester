@@ -9,6 +9,8 @@
  *
  */
 
+"use strict";
+
 /**************************************************************************/
 /*! 
     @brief  default I2C address
@@ -209,27 +211,33 @@ const INA219_REG_CALIBRATION = 0x05;
 */
 /**************************************************************************/
 
+
 class Adafruit_INA219 {
 
 	constructor(device_address){
 
 		this.device_address = device_address;
 
-	};
+	},
   
+	// Attributes
+	
+	woWire = '_i2c',
+
+	ina219_i2caddr,
+	ina219_calValue,
+
+	// The following multipliers are used to convert raw current and power
+	// values to mA and mW, taking into account the current config settings
+
+	ina219_currentDivider_mA,
+	ina219_powerMultiplier_mW,
+
+
 	// Method definition
 
-	begin = function(){
 
-
-	};
-
-	begin(theWire) = function(){
-
-
-	};
-
-	setCalibration_32V_2A = function(){
+	setCalibration_32V_2A(){
 
 		// By default we use a pretty huge range for the input voltage,
 		// which probably isn't the most appropriate choice for system
@@ -312,7 +320,7 @@ class Adafruit_INA219 {
 
 	};
 	
-	setCalibration_32V_1A = function(){
+	setCalibration_32V_1A(){
 
 		// By default we use a pretty huge range for the input voltage,
 		// which probably isn't the most appropriate choice for system
@@ -397,7 +405,7 @@ class Adafruit_INA219 {
 
 	};
 
-	setCalibration_16V_400mA = function(){
+	setCalibration_16V_400mA(){
 
 		// Calibration which uses the highest precision for 
 		// current measurement (0.1mA), at the expense of 
@@ -483,61 +491,48 @@ class Adafruit_INA219 {
 
 	};
 
-	getBusVoltage_V = fuction(){
+	getBusVoltage_V(){
 
-		let value = getBusVoltage_raw();
+		var value = getBusVoltage_raw();
   		return value * 0.001;
 
 	};
 
-	getShuntVoltage_mV = fuction(){
+	getShuntVoltage_mV(){
 	
-		let value;
+		var value;
   		value = getShuntVoltage_raw();
   		return value * 0.01;
 
 	};
 
-	getCurrent_mA = fuction(){
+	getCurrent_mA(){
 
-		let valueDec = getCurrent_raw();
+		var valueDec = getCurrent_raw();
 		valueDec /= ina219_currentDivider_mA;
 		return valueDec;
 		
 	};
 	
-	getPower_mW = fuction(){
+	getPower_mW(){
 		
-		let valueDec = getPower_raw();
+		var valueDec = getPower_raw();
 		valueDec *= ina219_powerMultiplier_mW;
 		return valueDec;
 
 	};
 
-	let woWire = '_i2c';
+	wireWriteRegister(reg, value) {
 
-	let ina219_i2caddr;
-	let ina219_calValue;
-	
-	// The following multipliers are used to convert raw current and power
-	// values to mA and mW, taking into account the current config settings
-	
-	let ina219_currentDivider_mA;
-	let ina219_powerMultiplier_mW;
-
-	init();
-
-	wireWriteRegister = function(reg, value) {
-
-		let command = 'i2cset -y 0 '+INA219_ADDRESS+' '+reg+' '+value;
+		var command = 'i2cset -y 0 '+INA219_ADDRESS+' '+reg+' '+value;
 
 		exec(command);
 
 	};
 	
-	wireReadRegister = function(reg){
+	wireReadRegister(reg){
 
-		let command = 'i2cget -y 0 '+INA219_ADDRESS+' '+reg+' '+value;
+		var command = 'i2cget -y 0 '+INA219_ADDRESS+' '+reg+' '+value;
 
 		exec(command, function(err,out,code){
 
@@ -554,26 +549,26 @@ class Adafruit_INA219 {
 
 	};
 
-	getBusVoltage_raw = function(){
+	getBusVoltage_raw(){
 
-		let value = wireReadRegister(INA219_REG_BUSVOLTAGE);
+		var value = wireReadRegister(INA219_REG_BUSVOLTAGE);
 
 		// Shift to the right 3 to drop CNVR and OVF and multiply by LSB
 		return (int)((value >> 3) * 4);
 
 	};
 
-	getShuntVoltage_raw = function(){
+	getShuntVoltage_raw(){
 
-		let value;
+		var value;
 		value = wireReadRegister(INA219_REG_SHUNTVOLTAGE);
 		return (int) value;
 
 	};
 
-	getCurrent_raw = function(){
+	getCurrent_raw(){
 
-		let value;
+		var value;
 
 		// Sometimes a sharp load will reset the INA219, which will
 		// reset the cal register, meaning CURRENT and POWER will
@@ -589,9 +584,9 @@ class Adafruit_INA219 {
 
 	};
 	
-	getPower_raw = function(){
+	getPower_raw(){
 
-		let value;
+		var value;
 
 		// Sometimes a sharp load will reset the INA219, which will
 		// reset the cal register, meaning CURRENT and POWER will
@@ -607,3 +602,4 @@ class Adafruit_INA219 {
 	};
 
 };
+       
