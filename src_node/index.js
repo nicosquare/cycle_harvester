@@ -21,7 +21,22 @@ const server = http.createServer((req, res) => {
 
   
 server.listen(port, hostname, () => {
-	ina219.setCalibration_32V_1A();
-	console.log("THIS IS A TEST");
+
+	ina219.setCalibration_32V_1A;
+	
+	var shuntvoltage = 0;
+	var busvoltage = 0;
+	var current_mA = 0;
+	var loadvoltage = 0;
+	var power_mW = 0;
+	
+	shuntvoltage = ina219.getShuntVoltage_mV;
+    busvoltage = ina219.getBusVoltage_V;
+    current_mA = ina219.getCurrent_mA;
+    power_mW = ina219.getPower_mW;
+    loadvoltage = busvoltage + (shuntvoltage / 1000);
+	
+	console.log("THIS IS A TEST 2");
+	console.log("shunt Voltage: "+shuntvoltage);
 	console.log(`Server running at http://${hostname}:${port}/`);
 });
