@@ -553,7 +553,7 @@ class Adafruit_INA219 {
 		var value = wireReadRegister(INA219_REG_BUSVOLTAGE);
 
 		// Shift to the right 3 to drop CNVR and OVF and multiply by LSB
-		return (int)((value >> 3) * 4);
+		return parseInt(((value >> 3) * 4));
 
 	};
 
@@ -561,7 +561,7 @@ class Adafruit_INA219 {
 
 		var value;
 		value = wireReadRegister(INA219_REG_SHUNTVOLTAGE);
-		return (int) value;
+		return parseInt(value);
 
 	};
 
@@ -579,7 +579,7 @@ class Adafruit_INA219 {
 		// Now we can safely read the CURRENT register!
 		value = wireReadRegister(INA219_REG_CURRENT);
 
-		return (int) value;
+		return parseInt(value);
 
 	};
 	
@@ -596,7 +596,7 @@ class Adafruit_INA219 {
 		// Now we can safely read the POWER register!
 		value = wireReadRegister(INA219_REG_POWER);
 
-		return (int) value;
+		return parseInt(value);
 
 	};
 
