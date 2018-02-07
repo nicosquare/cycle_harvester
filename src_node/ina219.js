@@ -62,8 +62,8 @@ const INA219_CONFIG_BVOLTAGERANGE_MASK = 0x2000;  // Bus Voltage Range Mask
 /**************************************************************************/
 
 const voltage_ranges = {
-	"INA219_CONFIG_BVOLTAGERANGE_16V" : 0x0000,  // 0-16V Range
-    "INA219_CONFIG_BVOLTAGERANGE_32V" : 0x2000  // 0-32V Range
+	INA219_CONFIG_BVOLTAGERANGE_16V : 0x0000,  // 0-16V Range
+    INA219_CONFIG_BVOLTAGERANGE_32V : 0x2000  // 0-32V Range
 };
 
 /**************************************************************************/
@@ -81,10 +81,10 @@ const INA219_CONFIG_GAIN_MASK = 0x1800;  // Gain Mask
 /**************************************************************************/
 
 const gain_bits = {
-    "INA219_CONFIG_GAIN_1_40MV" : 0x0000,  // Gain 1, 40mV Range
-    "INA219_CONFIG_GAIN_2_80MV" : 0x0800,  // Gain 2, 80mV Range
-    "INA219_CONFIG_GAIN_4_160MV" : 0x1000,  // Gain 4, 160mV Range
-    "INA219_CONFIG_GAIN_8_320MV": 0x1800  // Gain 8, 320mV Range
+    INA219_CONFIG_GAIN_1_40MV : 0x0000,  // Gain 1, 40mV Range
+    INA219_CONFIG_GAIN_2_80MV : 0x0800,  // Gain 2, 80mV Range
+    INA219_CONFIG_GAIN_4_160MV : 0x1000,  // Gain 4, 160mV Range
+    INA219_CONFIG_GAIN_8_320MV: 0x1800  // Gain 8, 320mV Range
 };
 	
 /**************************************************************************/
@@ -102,10 +102,10 @@ const INA219_CONFIG_BADCRES_MASK = 0x0780;  // Bus ADC Resolution Mask
 /**************************************************************************/
 
 const values_adc_resolution= {
-    "INA219_CONFIG_BADCRES_9BIT " : 0x0000,  // 9-bit bus res = 0..511
-    "INA219_CONFIG_BADCRES_10BIT" : 0x0080,  // 10-bit bus res = 0..1023
-    "INA219_CONFIG_BADCRES_11BIT" : 0x0100,  // 11-bit bus res = 0..2047
-    "INA219_CONFIG_BADCRES_12BIT" : 0x0180  // 12-bit bus res = 0..4097
+    INA219_CONFIG_BADCRES_9BIT  : 0x0000,  // 9-bit bus res = 0..511
+    INA219_CONFIG_BADCRES_10BIT : 0x0080,  // 10-bit bus res = 0..1023
+    INA219_CONFIG_BADCRES_11BIT : 0x0100,  // 11-bit bus res = 0..2047
+    INA219_CONFIG_BADCRES_12BIT : 0x0180  // 12-bit bus res = 0..4097
 };
 
 /**************************************************************************/
@@ -123,17 +123,17 @@ const INA219_CONFIG_SADCRES_MASK = 0x0078;  // Shunt ADC Resolution and Averagin
 /**************************************************************************/
 
 const values_shunt_resolution = {
-    "INA219_CONFIG_SADCRES_9BIT_1S_84US" : 0x0000,  // 1 x 9-bit shunt sample
-    "INA219_CONFIG_SADCRES_10BIT_1S_148US" : 0x0008,  // 1 x 10-bit shunt sample
-    "INA219_CONFIG_SADCRES_11BIT_1S_276US" : 0x0010,  // 1 x 11-bit shunt sample
-    "INA219_CONFIG_SADCRES_12BIT_1S_532US" : 0x0018,  // 1 x 12-bit shunt sample
-    "INA219_CONFIG_SADCRES_12BIT_2S_1060US" : 0x0048,	 // 2 x 12-bit shunt samples averaged together
-    "INA219_CONFIG_SADCRES_12BIT_4S_2130US" : 0x0050,  // 4 x 12-bit shunt samples averaged together
-    "INA219_CONFIG_SADCRES_12BIT_8S_4260US" : 0x0058,  // 8 x 12-bit shunt samples averaged together
-    "INA219_CONFIG_SADCRES_12BIT_16S_8510US" : 0x0060,  // 16 x 12-bit shunt samples averaged together
-    "INA219_CONFIG_SADCRES_12BIT_32S_17MS" : 0x0068,  // 32 x 12-bit shunt samples averaged together
-    "INA219_CONFIG_SADCRES_12BIT_64S_34MS" : 0x0070,  // 64 x 12-bit shunt samples averaged together
-    "INA219_CONFIG_SADCRES_12BIT_128S_69MS" : 0x0078  // 128 x 12-bit shunt samples averaged together
+    INA219_CONFIG_SADCRES_9BIT_1S_84US : 0x0000,  // 1 x 9-bit shunt sample
+    INA219_CONFIG_SADCRES_10BIT_1S_148US : 0x0008,  // 1 x 10-bit shunt sample
+    INA219_CONFIG_SADCRES_11BIT_1S_276US : 0x0010,  // 1 x 11-bit shunt sample
+    INA219_CONFIG_SADCRES_12BIT_1S_532US : 0x0018,  // 1 x 12-bit shunt sample
+    INA219_CONFIG_SADCRES_12BIT_2S_1060US : 0x0048,	 // 2 x 12-bit shunt samples averaged together
+    INA219_CONFIG_SADCRES_12BIT_4S_2130US : 0x0050,  // 4 x 12-bit shunt samples averaged together
+    INA219_CONFIG_SADCRES_12BIT_8S_4260US : 0x0058,  // 8 x 12-bit shunt samples averaged together
+    INA219_CONFIG_SADCRES_12BIT_16S_8510US : 0x0060,  // 16 x 12-bit shunt samples averaged together
+    INA219_CONFIG_SADCRES_12BIT_32S_17MS : 0x0068,  // 32 x 12-bit shunt samples averaged together
+    INA219_CONFIG_SADCRES_12BIT_64S_34MS : 0x0070,  // 64 x 12-bit shunt samples averaged together
+    INA219_CONFIG_SADCRES_12BIT_128S_69MS : 0x0078  // 128 x 12-bit shunt samples averaged together
 };
 
 /**************************************************************************/
@@ -152,14 +152,14 @@ const INA219_CONFIG_MODE_MASK = 0x0007;  // Operating Mode Mask
 
 const values_operating_mode = {
 
-    "INA219_CONFIG_MODE_POWERDOWN" : 0x0000,
-    "INA219_CONFIG_MODE_SVOLT_TRIGGERED" : 0x0001,
-    "INA219_CONFIG_MODE_BVOLT_TRIGGERED" : 0x0002,
-    "INA219_CONFIG_MODE_SANDBVOLT_TRIGGERED" : 0x0003,
-    "INA219_CONFIG_MODE_ADCOFF" : 0x0004,
-    "INA219_CONFIG_MODE_SVOLT_CONTINUOUS" : 0x0005,
-    "INA219_CONFIG_MODE_BVOLT_CONTINUOUS" : 0x0006,
-    "INA219_CONFIG_MODE_SANDBVOLT_CONTINUOUS" : 0x0007	
+    INA219_CONFIG_MODE_POWERDOWN : 0x0000,
+    INA219_CONFIG_MODE_SVOLT_TRIGGERED : 0x0001,
+    INA219_CONFIG_MODE_BVOLT_TRIGGERED : 0x0002,
+    INA219_CONFIG_MODE_SANDBVOLT_TRIGGERED : 0x0003,
+    INA219_CONFIG_MODE_ADCOFF : 0x0004,
+    INA219_CONFIG_MODE_SVOLT_CONTINUOUS : 0x0005,
+    INA219_CONFIG_MODE_BVOLT_CONTINUOUS : 0x0006,
+    INA219_CONFIG_MODE_SANDBVOLT_CONTINUOUS : 0x0007	
 
 };
 
@@ -207,6 +207,21 @@ const INA219_REG_CALIBRATION = 0x05;
 
 /**************************************************************************/
 /*! 
+    @brief  General use methods
+*/
+/**************************************************************************/
+
+
+function formatToHex(number){
+	
+  var x = number.toString(16)
+  
+  return x.length == 1 ? '0x0'+x : '0x'+x
+    
+}
+
+/**************************************************************************/
+/*! 
     @brief  Class that stores state and functions for interacting with INA219 current/power monitor IC
 */
 /**************************************************************************/
@@ -218,18 +233,24 @@ class Adafruit_INA219 {
 		
 		// Attributes
 	
-		this.woWire = '_i2c';
-
-		this.ina219_i2caddr;
-		this.ina219_calValue;
+		this.ina219_calValue = 0;
 
 		// The following multipliers are used to convert raw current and power
 		// values to mA and mW, taking into account the current config settings
 
-		this.ina219_currentDivider_mA;
-		this.ina219_powerMultiplier_mW;
+		this.ina219_currentDivider_mA = 0;
+		this.ina219_powerMultiplier_mW = 0;
+		
+		// Devide address if using multiple devices
 		
 		this.device_address = device_address;
+
+		// Measurable variables
+		
+		this.shuntvoltageraw = 0;
+		this.busvoltageraw = 0;
+		this.currentraw = 0;
+		this.powerraw = 0;
 
 	};
  
@@ -270,7 +291,7 @@ class Adafruit_INA219 {
 		// Cal = trunc (0.04096 / (Current_LSB * RSHUNT))
 		// Cal = 4096 (0x1000)
 
-		ina219_calValue = 4096;
+		this.ina219_calValue = 4096;
 
 		// 6. Calculate the power LSB
 		// PowerLSB = 20 * CurrentLSB
@@ -302,20 +323,20 @@ class Adafruit_INA219 {
 		// MaximumPower = 102.4W
 
 		// Set multipliers to convert raw current/power values
-		ina219_currentDivider_mA = 10;  // Current LSB = 100uA per bit (1000/100 = 10)
-		ina219_powerMultiplier_mW = 2;     // Power LSB = 1mW per bit (2/1)
+		this.ina219_currentDivider_mA = 10;  // Current LSB = 100uA per bit (1000/100 = 10)
+		this.ina219_powerMultiplier_mW = 2;     // Power LSB = 1mW per bit (2/1)
 
 		// Set Calibration register to 'Cal' calculated above	
-		wireWriteRegister(INA219_REG_CALIBRATION, ina219_calValue);
+		this.wireWriteRegister(INA219_REG_CALIBRATION, ina219_calValue);
 
 		// Set Config register to take into account the settings above
-		config =	INA219_CONFIG_BVOLTAGERANGE_32V |
-                	INA219_CONFIG_GAIN_8_320MV |
-	                INA219_CONFIG_BADCRES_12BIT |
-	                INA219_CONFIG_SADCRES_12BIT_1S_532US |
-	                INA219_CONFIG_MODE_SANDBVOLT_CONTINUOUS;
+		var config =	voltage_ranges.INA219_CONFIG_BVOLTAGERANGE_32V |
+                	gain_bits.INA219_CONFIG_GAIN_8_320MV |
+	                values_adc_resolution.INA219_CONFIG_BADCRES_12BIT |
+	                values_shunt_resolution.INA219_CONFIG_SADCRES_12BIT_1S_532US |
+	                values_operating_mode.INA219_CONFIG_MODE_SANDBVOLT_CONTINUOUS;
 		
-		wireWriteRegister(INA219_REG_CONFIG, config);
+		this.wireWriteRegister(INA219_REG_CONFIG, config);
 
 	};
 	
@@ -353,7 +374,7 @@ class Adafruit_INA219 {
 		// Cal = trunc (0.04096 / (Current_LSB * RSHUNT))
 		// Cal = 10240 (0x2800)
 
-		ina219_calValue = 10240;
+		this.ina219_calValue = 10240;
 
 		// 6. Calculate the power LSB
 		// PowerLSB = 20 * CurrentLSB
@@ -387,20 +408,20 @@ class Adafruit_INA219 {
 		// MaximumPower = 41.94176W
 
 		// Set multipliers to convert raw current/power values
-		ina219_currentDivider_mA = 25;      // Current LSB = 40uA per bit (1000/40 = 25)
-		ina219_powerMultiplier_mW = 1;         // Power LSB = 800mW per bit
+		this.ina219_currentDivider_mA = 25;      // Current LSB = 40uA per bit (1000/40 = 25)
+		this.ina219_powerMultiplier_mW = 1;         // Power LSB = 800mW per bit
 
 		// Set Calibration register to 'Cal' calculated above	
-		wireWriteRegister(INA219_REG_CALIBRATION, ina219_calValue);
+		this.wireWriteRegister(INA219_REG_CALIBRATION, this.ina219_calValue);
 
 		// Set Config register to take into account the settings above
-		config = 	INA219_CONFIG_BVOLTAGERANGE_32V |
-	                INA219_CONFIG_GAIN_8_320MV |
-	                INA219_CONFIG_BADCRES_12BIT |
-	                INA219_CONFIG_SADCRES_12BIT_1S_532US |
-	                INA219_CONFIG_MODE_SANDBVOLT_CONTINUOUS;
+		var config = 	voltage_ranges.INA219_CONFIG_BVOLTAGERANGE_32V |
+	                gain_bits.INA219_CONFIG_GAIN_8_320MV |
+	                values_adc_resolution.INA219_CONFIG_BADCRES_12BIT |
+	                values_shunt_resolution.INA219_CONFIG_SADCRES_12BIT_1S_532US |
+	                values_operating_mode.INA219_CONFIG_MODE_SANDBVOLT_CONTINUOUS;
 	
-		wireWriteRegister(INA219_REG_CONFIG, config);
+		this.wireWriteRegister(INA219_REG_CONFIG, config);
 
 	};
 
@@ -435,7 +456,7 @@ class Adafruit_INA219 {
 		// Cal = trunc (0.04096 / (Current_LSB * RSHUNT))
 		// Cal = 8192 (0x2000)
 
-		ina219_calValue = 8192;
+		this.ina219_calValue = 8192;
 
 		// 6. Calculate the power LSB
 		// PowerLSB = 20 * CurrentLSB
@@ -473,96 +494,105 @@ class Adafruit_INA219 {
 		// MaximumPower = 6.4W
 
 		// Set multipliers to convert raw current/power values
-		ina219_currentDivider_mA = 20;  // Current LSB = 50uA per bit (1000/50 = 20)
-		ina219_powerMultiplier_mW = 1;     // Power LSB = 1mW per bit
+		this.ina219_currentDivider_mA = 20;  // Current LSB = 50uA per bit (1000/50 = 20)
+		this.ina219_powerMultiplier_mW = 1;     // Power LSB = 1mW per bit
 
 		// Set Calibration register to 'Cal' calculated above 
-		wireWriteRegister(INA219_REG_CALIBRATION, ina219_calValue);
+		this.wireWriteRegister(INA219_REG_CALIBRATION, ina219_calValue);
 
 		// Set Config register to take into account the settings above
-		config = 	INA219_CONFIG_BVOLTAGERANGE_16V |
-                	INA219_CONFIG_GAIN_1_40MV |
-	                INA219_CONFIG_BADCRES_12BIT |
-	                INA219_CONFIG_SADCRES_12BIT_1S_532US |
-	                INA219_CONFIG_MODE_SANDBVOLT_CONTINUOUS;
+		var config = 	voltage_ranges.INA219_CONFIG_BVOLTAGERANGE_16V |
+                	gain_bits.INA219_CONFIG_GAIN_1_40MV |
+	                values_adc_resolution.INA219_CONFIG_BADCRES_12BIT |
+	                values_shunt_resolution.INA219_CONFIG_SADCRES_12BIT_1S_532US |
+	                values_operating_mode.INA219_CONFIG_MODE_SANDBVOLT_CONTINUOUS;
 		
-		wireWriteRegister(INA219_REG_CONFIG, config);
+		this.wireWriteRegister(INA219_REG_CONFIG, config);
 
 	};
 
 	getBusVoltage_V(){
 
-		var value = getBusVoltage_raw();
-  		return value * 0.001;
+		return this.busvoltageraw * 0.001;
 
 	};
 
 	getShuntVoltage_mV(){
 	
-		var value;
-  		value = getShuntVoltage_raw();
-  		return value * 0.01;
+		return this.shuntvoltageraw * 0.01;
 
 	};
 
 	getCurrent_mA(){
 
-		var valueDec = getCurrent_raw();
-		valueDec /= ina219_currentDivider_mA;
+		var valueDec = this.currentraw;
+		valueDec /= this.ina219_currentDivider_mA;
 		return valueDec;
 		
 	};
 	
 	getPower_mW(){
 		
-		var valueDec = getPower_raw();
-		valueDec *= ina219_powerMultiplier_mW;
+		var valueDec = this.powerraw;
+		valueDec *= this.ina219_powerMultiplier_mW;
 		return valueDec;
 
 	};
 
 	wireWriteRegister(reg, value) {
 
-		var command = 'i2cset -y 0 '+INA219_ADDRESS+' '+reg+' '+value;
+		var command = 'i2cset -y 0 '+formatToHex(INA219_ADDRESS)+' '+formatToHex(reg)+' '+formatToHex(value);
 
 		exec(command);
 
 	};
 	
-	wireReadRegister(reg){
-
-		var command = 'i2cget -y 0 '+INA219_ADDRESS+' '+reg+' '+value;
-
-		exec(command, function(err,out,code){
-
-			if (err instanceof Error)
-		    throw err;
-
-	  		process.stderr.write(err);
-	  		process.stdout.write(out);
-	  		process.exit(code);
-
-	  		return out;
-
+	wireReadRegister(reg) {
+		
+		var command = 'i2cget -y 0 '+formatToHex(INA219_ADDRESS)+' '+formatToHex(reg);
+		
+		return new Promise(function(resolve, reject) {
+		
+			console.log("Command "+command);
+			
+			exec(command, function(err,out,code){
+				
+				console.log("err "+err);
+				console.log("out "+out);
+				
+				if (err != null)
+					reject(err);
+				else
+					resolve(out);
+			});
 		});
-
-	};
+	}
 
 	getBusVoltage_raw(){
-
-		var value = wireReadRegister(INA219_REG_BUSVOLTAGE);
-
-		// Shift to the right 3 to drop CNVR and OVF and multiply by LSB
-		return parseInt(((value >> 3) * 4));
-
+		this.wireReadRegister(INA219_REG_BUSVOLTAGE)
+			.then(function(result){
+				console.log("Bus voltage raw "+result);
+				// Shift to the right 3 to drop CNVR and OVF and multiply by LSB
+				callback(parseInt(((result >> 3) * 4)));
+			})
+			.catch(function(err){
+				console.log("Something went wrong "+err)
+			});
+	};
+	
+	updateBusVoltage_raw(value){
+		this.busvoltageraw = value;
 	};
 
 	getShuntVoltage_raw(){
-
-		var value;
-		value = wireReadRegister(INA219_REG_SHUNTVOLTAGE);
-		return parseInt(value);
-
+		this.wireReadRegister(INA219_REG_SHUNTVOLTAGE)
+			.then(function(result){
+				console.log("Shunt voltage raw "+result);
+				this.shuntvoltageraw = parseInt(result);
+			})
+			.catch(function(err){
+				console.log("Something went wrong "+err)
+			});
 	};
 
 	getCurrent_raw(){
@@ -574,13 +604,18 @@ class Adafruit_INA219 {
 		// not be available ... avoid this by always setting a cal
 		// value even if it's an unfortunate extra step
 
-		wireWriteRegister(INA219_REG_CALIBRATION, ina219_calValue);
+		this.wireWriteRegister(INA219_REG_CALIBRATION, this.ina219_calValue);
 
 		// Now we can safely read the CURRENT register!
-		value = wireReadRegister(INA219_REG_CURRENT);
-
-		return parseInt(value);
-
+		this.wireReadRegister(INA219_REG_CURRENT)
+			.then(function(result){
+				console.log("Current raw "+result);
+				this.currentraw = parseInt(result);
+			})
+			.catch(function(err){
+				console.log("Something went wrong "+err)
+			});
+			
 	};
 	
 	getPower_raw(){
@@ -591,14 +626,22 @@ class Adafruit_INA219 {
 		// reset the cal register, meaning CURRENT and POWER will
 		// not be available ... avoid this by always setting a cal
 		// value even if it's an unfortunate extra step
-		wireWriteRegister(INA219_REG_CALIBRATION, ina219_calValue);
+		this.wireWriteRegister(INA219_REG_CALIBRATION, this.ina219_calValue);
 
 		// Now we can safely read the POWER register!
-		value = wireReadRegister(INA219_REG_POWER);
-
-		return parseInt(value);
-
+		this.wireReadRegister(INA219_REG_POWER)
+			.then(function(result){
+				console.log("Power raw "+result);
+				this.powerraw = parseInt(result);
+			})
+			.catch(function(err){
+				console.log("Something went wrong "+err)
+			});
+			
 	};
 
 };
+
+
+module.exports.sensor = Adafruit_INA219;
        

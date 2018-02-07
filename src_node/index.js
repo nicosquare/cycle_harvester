@@ -1,6 +1,6 @@
 exec = require('child_process').exec;
 os = require('os');
-ina219 = require('./ina219');
+ina219 = require('./ina219.js');
 
 const http = require('http');
 const hostname = os.networkInterfaces()['apcli0'][0].address;
@@ -22,7 +22,9 @@ const server = http.createServer((req, res) => {
   
 server.listen(port, hostname, () => {
 
-	ina219.setCalibration_32V_1A;
+	var sensor = new ina219.sensor(ina219.INA219_ADDRESS);
+
+	sensor.setCalibration_32V_1A();
 	
 	var shuntvoltage = 0;
 	var busvoltage = 0;
@@ -30,13 +32,23 @@ server.listen(port, hostname, () => {
 	var loadvoltage = 0;
 	var power_mW = 0;
 	
-	shuntvoltage = ina219.getShuntVoltage_mV;
-    busvoltage = ina219.getBusVoltage_V;
-    current_mA = ina219.getCurrent_mA;
-    power_mW = ina219.getPower_mW;
+	sensor.getBusVoltage_raw();
+	//sensor.getShuntVoltage_raw();
+	//sensor.getCurrent_raw();
+	//sensor.getPower_raw();
+	
+	//shuntvoltage = sensor.getShuntVoltage_mV();
+    busvoltage = sensor.getBusVoltage_V();
+    //current_mA = sensor.getCurrent_mA();
+    //power_mW = sensor.getPower_mW();
+    
     loadvoltage = busvoltage + (shuntvoltage / 1000);
 	
-	console.log("THIS IS A TEST 2");
-	console.log("shunt Voltage: "+shuntvoltage);
+	console.log("Shunt Voltage: "+shuntvoltage);
+	console.log("Bus Voltage: "+busvoltage);
+	console.log("Current mA: "+current_mA);
+	console.log("Load Voltage: "+loadvoltage);
+	console.log("Power mW: "+power_mW);
+	
 	console.log(`Server running at http://${hostname}:${port}/`);
 });
