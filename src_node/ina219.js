@@ -557,9 +557,6 @@ class Adafruit_INA219 {
 			
 			exec(command, function(err,out,code){
 				
-				console.log("err "+err);
-				console.log("out "+out);
-				
 				if (err != null)
 					reject(err);
 				else
@@ -568,12 +565,12 @@ class Adafruit_INA219 {
 		});
 	}
 
-	getBusVoltage_raw(){
+	getBusVoltage_raw(callback){
 		this.wireReadRegister(INA219_REG_BUSVOLTAGE)
 			.then(function(result){
-				console.log("Bus voltage raw "+result);
+				console.log("Res. Bus voltage raw "+result);
 				// Shift to the right 3 to drop CNVR and OVF and multiply by LSB
-				callback(parseInt(((result >> 3) * 4)));
+				return callback(parseInt(((result >> 3) * 4)));
 			})
 			.catch(function(err){
 				console.log("Something went wrong "+err)
@@ -584,18 +581,22 @@ class Adafruit_INA219 {
 		this.busvoltageraw = value;
 	};
 
-	getShuntVoltage_raw(){
+	getShuntVoltage_raw(callback){
 		this.wireReadRegister(INA219_REG_SHUNTVOLTAGE)
 			.then(function(result){
-				console.log("Shunt voltage raw "+result);
-				this.shuntvoltageraw = parseInt(result);
+				console.log("Res. Shunt voltage raw "+result);
+				return callback(parseInt(result));
 			})
 			.catch(function(err){
 				console.log("Something went wrong "+err)
 			});
 	};
 
-	getCurrent_raw(){
+	updateShuntVoltage_raw(value){
+		this.shuntvoltageraw = value;
+	};
+
+	getCurrent_raw(callback){
 
 		var value;
 
@@ -609,8 +610,8 @@ class Adafruit_INA219 {
 		// Now we can safely read the CURRENT register!
 		this.wireReadRegister(INA219_REG_CURRENT)
 			.then(function(result){
-				console.log("Current raw "+result);
-				this.currentraw = parseInt(result);
+				console.log("Res. Current raw "+result);
+				return callback(parseInt(result));
 			})
 			.catch(function(err){
 				console.log("Something went wrong "+err)
@@ -618,7 +619,11 @@ class Adafruit_INA219 {
 			
 	};
 	
-	getPower_raw(){
+	updateCurrent_raw(value){
+		this.currentraw = value;
+	};
+	
+	getPower_raw(callback){
 
 		var value;
 
@@ -631,13 +636,17 @@ class Adafruit_INA219 {
 		// Now we can safely read the POWER register!
 		this.wireReadRegister(INA219_REG_POWER)
 			.then(function(result){
-				console.log("Power raw "+result);
-				this.powerraw = parseInt(result);
+				console.log("Res. Power raw "+result);
+				return callback(parseInt(result));
 			})
 			.catch(function(err){
 				console.log("Something went wrong "+err)
 			});
 			
+	};
+
+	updatePower_raw(value){
+		this.powerraw = value;
 	};
 
 };
